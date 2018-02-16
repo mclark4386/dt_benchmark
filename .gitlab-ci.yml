@@ -1,4 +1,5 @@
 before_script:
+  - apt install postgresql-client
   - ln -s /builds /go/src/$(echo "cpsg-git.mattclark.guru/highlands/dt_benchmark" | cut -d "/" -f1)
   - cd /go/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
   - mkdir -p public/assets
