@@ -50,7 +50,6 @@ func (u Users) String() string {
 }
 
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
 func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	var err error
 	return validate.Validate(
@@ -63,7 +62,7 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 			Message: "%s is already taken",
 			Fn: func() bool {
 				var b bool
-				q := tx.Where("email=?", u.Email)
+				q := tx.Where("email = ?", u.Email)
 				if u.ID != uuid.Nil {
 					q = q.Where("id != ?", u.ID)
 				}

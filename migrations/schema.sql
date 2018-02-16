@@ -52,8 +52,7 @@ ALTER TABLE schema_migration OWNER TO postgres;
 CREATE TABLE users (
     id uuid NOT NULL,
     email character varying(255) NOT NULL,
-    password character varying(255) NOT NULL,
-    age integer NOT NULL,
+    password_hash character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

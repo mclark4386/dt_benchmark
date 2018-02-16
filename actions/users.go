@@ -1,6 +1,8 @@
 package actions
 
 import (
+	"fmt"
+
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/markbates/pop"
@@ -103,7 +105,7 @@ func (v UsersResource) Create(c buffalo.Context) error {
 	}
 
 	// Validate the data from the html form
-	verrs, err := tx.ValidateAndCreate(user)
+	verrs, err := user.Create(tx)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -115,6 +117,7 @@ func (v UsersResource) Create(c buffalo.Context) error {
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
+		fmt.Printf("%v:%v", user, verrs)
 		// Render again the new.html template that the user can
 		// correct the input.
 		return c.Render(422, r.HTML("users/new.html"))
@@ -215,6 +218,11 @@ func (v UsersResource) Destroy(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
+	if current_user, cuok := c.Value("current_user").(*models.User); cuok && user.ID == current_user.ID {
+		c.Flash().Add("success", "User was destroyed successfully")
+		return AuthDestroy(c)
+	}
+
 	// If there are no errors set a flash message
 	c.Flash().Add("success", "User was destroyed successfully")
 
@@ -228,7 +236,11 @@ func SetCurrentUser(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
 		if uid := c.Session().Get("current_user_id"); uid != nil {
 			u := &models.User{}
-			tx := c.Value("tx").(*pop.Connection)
+			tx, ok := c.Value("tx").(*pop.Connection)
+			if !ok {
+				return errors.WithStack(errors.New("no transaction found"))
+			}
+
 			err := tx.Find(u, uid)
 			if err != nil {
 				return errors.WithStack(err)

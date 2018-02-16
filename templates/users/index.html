@@ -8,14 +8,12 @@
 <table class="table table-striped">
   <thead>
   <th>Email</th>
-    <th>PasswordHash</th>
     <th>&nbsp;</th>
   </thead>
   <tbody>
     <%= for (user) in users { %>
       <tr>
       <td><%= user.Email %></td>
-        <td><%= user.PasswordHash %></td>
         <td>
           <div class="pull-right">
             <a href="<%= userPath({ user_id: user.ID }) %>" class="btn btn-info">View</a>
