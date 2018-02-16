@@ -9,6 +9,15 @@
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
   </head>
   <body>
+    <nav>
+      <%= if (current_user) { %>
+        <h1><%= current_user.Email %></h1>
+        <a href="/logout" data-method="DELETE">Sign Out</a>
+      <% } else { %>
+        <a href="/login" class="btn btn-primary">Sign In</a>
+        <a href="/users/new" class="btn btn-success">Register</a>
+      <% } %>
+      </nav>
 
     <div class="container">
       <%= partial("flash.html") %>
