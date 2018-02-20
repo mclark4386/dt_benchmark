@@ -1,0 +1,31 @@
+# This is a multi-stage Dockerfile and requires >= Docker 17.05
+# https://docs.docker.com/engine/userguide/eng-image/multistage-build/
+# FROM golang:latest as builder
+
+# RUN mkdir -p $GOPATH/src/mmgitl.mattclark.guru/v2/backend/public/assets
+# WORKDIR $GOPATH/src/mmgitl.mattclark.guru/v2/backend
+
+# ADD . .
+# RUN apt-get update && apt-get install -y postgresql-client
+# RUN go get -u github.com/gobuffalo/buffalo/buffalo
+# # RUN go get $(go list ./... | grep -v /vendor/)
+# RUN go get -t -v ./...
+# RUN buffalo build --static -o /bin/app
+
+FROM alpine
+RUN apk add --no-cache bash
+RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache tzdata
+
+# Comment out to run the binary in "production" mode:
+# ENV GO_ENV=production
+
+WORKDIR /bin/
+
+COPY app .
+
+EXPOSE 3000
+
+# Comment out to run the migrations before running the binary:
+# CMD /bin/app migrate; /bin/app
+CMD /bin/app

@@ -1,14 +1,11 @@
-before_script:
-  - apt update && apt install -y postgresql-client
-  - ln -s /builds /go/src/$(echo "cpsg-git.mattclark.guru/highlands/dt_benchmark" | cut -d "/" -f1)
-  - cd /go/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
-  - mkdir -p public/assets
-  - go get -u github.com/gobuffalo/buffalo/buffalo
-  - go get -t -v ./...
-  - export PATH="$PATH:$GOPATH/bin"
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
 stages:
-  - test
+  - build
+  - package
+  - release
 
 .test-vars: &test-vars
   variables:
@@ -16,27 +13,47 @@ stages:
     POSTGRES_DB: "dt_benchmark_test"
     TEST_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/dt_benchmark_test?sslmode=disable"
 
-# Golang version choice helper
-.use-golang-image: &use-golang-latest
+build:test:
   image: golang:latest
-
-.use-golang-image: &use-golang-1-8
-  image: golang:1.8
-
-test:latest:
-  <<: *use-golang-latest
   <<: *test-vars
-  stage: test
   services:
     - postgres:latest
+  stage: build
   script:
+    - apt-get update && apt-get install -y postgresql-client
+    - ln -s /builds /go/src/$(echo "cpsg-git.mattclark.guru/highlands/dt_benchmark" | cut -d "/" -f1)
+    - cd /go/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
+    - mkdir -p public/assets
+    - go get -u github.com/gobuffalo/buffalo/buffalo
+    - go get -t -v ./...
+    - export PATH="$PATH:$GOPATH/bin"
     - buffalo test
+    - buffalo build --static -o $CI_PROJECT_DIR/app
+  artifacts:
+    paths:
+      - app
 
-test:1.8:
-  <<: *use-golang-1-8
-  <<: *test-vars
-  stage: test
+package-image:
+  image: docker:latest
   services:
-    - postgres:latest
+    - docker:dind
+  stage: package
   script:
-    - buffalo test
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $IMAGE_TAG -f ./Dockerfile-gitlab .
+    - docker push $IMAGE_TAG
+  dependencies:
+    - build:test
+
+release-image:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: release
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull $IMAGE_TAG
+    - docker tag $IMAGE_TAG $RELEASE_TAG
+    - docker push $RELEASE_TAG
+  only:
+    - master
