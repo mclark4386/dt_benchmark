@@ -67,6 +67,9 @@ func App() *buffalo.App {
 		usr := &UsersResource{}
 		app.Middleware.Skip(Authorize, usr.Create, usr.New)
 		app.Resource("/users", UsersResource{&buffalo.BaseResource{}})
+		page := &PagesResource{}
+		app.Middleware.Skip(Authorize, page.Show)
+		app.Resource("/pages", PagesResource{&buffalo.BaseResource{}})
 	}
 
 	return app

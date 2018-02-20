@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Page</h1>
+</div>
+
+<%= form_for(page, {action: pagePath({ page_id: page.ID }), method: "PUT"}) { %>
+  <%= partial("pages/form.html") %>
+  <a href="<%= pagePath({ page_id: page.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>

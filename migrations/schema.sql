@@ -35,6 +35,22 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: pages; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE pages (
+    id uuid NOT NULL,
+    title character varying(255) NOT NULL,
+    content text NOT NULL,
+    slug character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE pages OWNER TO postgres;
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -61,11 +77,26 @@ CREATE TABLE users (
 ALTER TABLE users OWNER TO postgres;
 
 --
+-- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pages
+    ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pages_slug_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX pages_slug_idx ON pages USING btree (slug);
 
 
 --
