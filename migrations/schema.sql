@@ -62,6 +62,22 @@ CREATE TABLE schema_migration (
 ALTER TABLE schema_migration OWNER TO postgres;
 
 --
+-- Name: teams; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE teams (
+    id uuid NOT NULL,
+    name character varying(50) NOT NULL,
+    description character varying(255) NOT NULL,
+    page_slug character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE teams OWNER TO postgres;
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -85,6 +101,14 @@ ALTER TABLE ONLY pages
 
 
 --
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -97,6 +121,13 @@ ALTER TABLE ONLY users
 --
 
 CREATE UNIQUE INDEX pages_slug_idx ON pages USING btree (slug);
+
+
+--
+-- Name: teams_name_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX teams_name_idx ON teams USING btree (name);
 
 
 --

@@ -1,0 +1,6 @@
+create_table("teams", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("name", "string", {"unique": true, "size":50})
+	t.Column("description", "string", {})
+	t.Column("page_slug", "string", {})
+})
