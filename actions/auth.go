@@ -6,8 +6,8 @@ import (
 
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
-	"github.com/markbates/pop"
-	"github.com/markbates/validate"
+	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/validate"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )

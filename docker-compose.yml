@@ -1,5 +1,7 @@
 db:
-  image: postgres
+  image: postgres:alpine
+  environments:
+    - POSTGRES_PASSWORD: "postgres"
   ports:
     - "5432:5432"
 
