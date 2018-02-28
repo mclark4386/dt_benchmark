@@ -27,6 +27,7 @@ build:test:
     - go get -u github.com/gobuffalo/buffalo/buffalo
     - go get -t -v ./...
     - export PATH="$PATH:$GOPATH/bin"
+    - yarn install --no-progess
     - buffalo test
     - buffalo build --static -o $CI_PROJECT_DIR/app
   artifacts:
