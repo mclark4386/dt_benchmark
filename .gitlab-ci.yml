@@ -21,11 +21,10 @@ build:test:
   stage: build
   script:
     - apt-get update && apt-get install -y postgresql-client
-    - ln -s /builds $GOPATH/src/$(echo "cpsg-git.mattclark.guru/highlands/dt_benchmark" | cut -d "/" -f1)
-    - cd /go/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
-    - mkdir -p public/assets
+    - ln -s /builds $GOPATH/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
+    - cd $GOPATH/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
     - yarn install --no-progess
-    - go get $(go list ./... | grep -v /vendor/)
+    - go get $(go list ./...)
     - buffalo test
     - buffalo build --static -o $CI_PROJECT_DIR/app
   artifacts:
