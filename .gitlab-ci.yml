@@ -1,4 +1,5 @@
 variables:
+  CI_REGISTRY: cpsg-git.mattclark.guru:4567
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   RELEASE_TAG: $CI_REGISTRY_IMAGE:latest
 
