@@ -5,8 +5,8 @@ variables:
 
 stages:
   - build
-  - package
-  - release
+#  - package
+#  - release
 
 .test-vars: &test-vars
   variables:
@@ -32,27 +32,27 @@ build:test:
     paths:
       - app
 
-package-image:
-  image: docker:latest
-  services:
-    - docker:dind
-  stage: package
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $IMAGE_TAG -f ./Dockerfile-gitlab .
-    - docker push $IMAGE_TAG
-  dependencies:
-    - build:test
+#package-image:
+#  image: docker:latest
+#  services:
+#    - docker:dind
+#  stage: package
+#  script:
+#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+#    - docker build -t $IMAGE_TAG -f ./Dockerfile-gitlab .
+#    - docker push $IMAGE_TAG
+#  dependencies:
+#    - build:test
 
-release-image:
-  image: docker:latest
-  services:
-    - docker:dind
-  stage: release
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull $IMAGE_TAG
-    - docker tag $IMAGE_TAG $RELEASE_TAG
-    - docker push $RELEASE_TAG
-  only:
-    - master
+#release-image:
+#  image: docker:latest
+#  services:
+#    - docker:dind
+#  stage: release
+#  script:
+#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+#    - docker pull $IMAGE_TAG
+#    - docker tag $IMAGE_TAG $RELEASE_TAG
+#    - docker push $RELEASE_TAG
+#  only:
+#    - master
