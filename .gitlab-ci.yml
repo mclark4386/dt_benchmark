@@ -24,6 +24,8 @@ build:test:
     - ln -s /builds $GOPATH/src/$(echo "cpsg-git.mattclark.guru/highlands/dt_benchmark" | cut -d "/" -f1)
     - cd $GOPATH/src/cpsg-git.mattclark.guru/highlands/dt_benchmark
     - yarn install --no-progess
+    - ls -al
+    - echo $(go list ./... | grep -v /vendor/)
     - go get $(go list ./... | grep -v /vendor/)
     - buffalo test
     - buffalo build --static -o $CI_PROJECT_DIR/app
