@@ -37,7 +37,7 @@ package-image:
     - docker:dind
   stage: package
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t $IMAGE_TAG -f ./Dockerfile-gitlab .
     - docker push $IMAGE_TAG
   dependencies:
@@ -49,7 +49,7 @@ release-image:
     - docker:dind
   stage: release
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker pull $IMAGE_TAG
     - docker tag $IMAGE_TAG $RELEASE_TAG
     - docker push $RELEASE_TAG
