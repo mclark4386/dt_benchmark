@@ -37,6 +37,7 @@ package-image:
     - docker:dind
   stage: package
   script:
+    - env
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build -t $IMAGE_TAG -f ./Dockerfile-gitlab .
     - docker push $IMAGE_TAG
