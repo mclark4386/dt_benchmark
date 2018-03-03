@@ -1,4 +1,10 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <%= f.InputTag("Title") %>
 <%= f.TextArea("Content", {rows: 10}) %>
 <%= f.InputTag("Slug") %>
 <button class="btn btn-success" role="submit">Save</button>
+
+<script>
+  var simplemde = new SimpleMDE({ element: document.getElementById("page-Content") });
+</script>
