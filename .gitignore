@@ -13,3 +13,4 @@ dt_benchmark
 .grifter/
 .env
 redis-data/
+migrations/schema.sql
