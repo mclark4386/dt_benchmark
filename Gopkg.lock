@@ -69,7 +69,6 @@
     "middleware",
     "middleware/csrf",
     "middleware/i18n",
-    "middleware/ssl",
     "render",
     "worker"
   ]
@@ -454,12 +453,6 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/unrolled/secure"
-  packages = ["."]
-  revision = "09c600e6d88476139828e3722c13c8553699adb0"
-
-[[projects]]
-  branch = "master"
   name = "golang.org/x/crypto"
   packages = [
     "bcrypt",
@@ -502,6 +495,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7eaab2de79cac1695398b12ae9389a86fe6d12e9b0301dc24b270ddf21ab375f"
+  inputs-digest = "8b3fd93682200e64f019f7f8e7eb9040c6ddfeec149889800b5b8c275443dc67"
   solver-name = "gps-cdcl"
   solver-version = 1
