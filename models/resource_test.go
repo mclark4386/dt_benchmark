@@ -1,7 +1,8 @@
 package models
 
-import "testing"
 /*
+import "testing"
+
 func Test_Resource(t *testing.T) {
 	t.Fatal("This test needs to be implemented!")
 }
