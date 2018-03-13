@@ -64,6 +64,7 @@ func App() *buffalo.App {
 		app.Middleware.Skip(Authorize, page.Show)
 		app.Resource("/pages", PagesResource{&buffalo.BaseResource{}})
 		app.Resource("/teams", TeamsResource{})
+		app.Resource("/resources", ResourcesResource{})
 	}
 
 	return app
