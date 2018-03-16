@@ -78,14 +78,14 @@
 [[projects]]
   name = "github.com/gobuffalo/envy"
   packages = ["."]
-  revision = "15f5083a6e269f8698715b13dd25f0538754ab37"
-  version = "v1.4.1"
+  revision = "197631a8f4c665cf7eeb157d5bc00d988419c4e7"
+  version = "v1.5.0"
 
 [[projects]]
   name = "github.com/gobuffalo/packr"
   packages = ["."]
-  revision = "6434a292ac52e6964adebfdce3f9ce6d9f16be01"
-  version = "v1.10.4"
+  revision = "3b045e91f1107684685627303665f7e02b1be016"
+  version = "v1.10.6"
 
 [[projects]]
   name = "github.com/gobuffalo/plush"
@@ -96,8 +96,8 @@
     "parser",
     "token"
   ]
-  revision = "a3df688902c0ccd9fa712ed5a1da6b78e7efab0d"
-  version = "v3.6.12"
+  revision = "15b6b3624ed2e8c99e24323ae39ced19138bf176"
+  version = "v3.7.0"
 
 [[projects]]
   name = "github.com/gobuffalo/pop"
@@ -109,8 +109,8 @@
     "fizz/translators",
     "nulls"
   ]
-  revision = "7e5659815c83f0e257958631052f2df0acec8be9"
-  version = "v4.0.5"
+  revision = "cb44fc0434884cae6aa74d56e9900e3e58f84ac1"
+  version = "v4.2.2"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -125,8 +125,8 @@
     "form",
     "form/bootstrap"
   ]
-  revision = "ab52126649ee51d858d9525f60bc1618592433b0"
-  version = "v2.0.0"
+  revision = "5333aff978bd35ee760641e5bec1793b263f01c9"
+  version = "v2.0.2"
 
 [[projects]]
   name = "github.com/gobuffalo/uuid"
@@ -229,7 +229,7 @@
   branch = "master"
   name = "github.com/markbates/inflect"
   packages = ["."]
-  revision = "3e32b42850a9f09fac18a6c09bbd04325f51f732"
+  revision = "b5c853d089b86134926274bc7a98496fee5e1d6b"
 
 [[projects]]
   name = "github.com/markbates/refresh"
@@ -397,7 +397,7 @@
   branch = "master"
   name = "github.com/shurcooL/graphql"
   packages = ["ident"]
-  revision = "8d3d310716dedf6f4945d11299e54a55bbdc6ff1"
+  revision = "3d276b9dcc6b1e0adf19557a8de5cb8632c07697"
 
 [[projects]]
   branch = "master"
@@ -426,8 +426,8 @@
 [[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
-  revision = "d682213848ed68c0a260ca37d6dd5ace8423f5ba"
-  version = "v1.0.4"
+  revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
+  version = "v1.0.5"
 
 [[projects]]
   branch = "master"
@@ -459,7 +459,7 @@
     "blowfish",
     "ssh/terminal"
   ]
-  revision = "91a49db82a88618983a78a06c1cbd4e00ab749ab"
+  revision = "374053ea96cb300f8671b8d3b07edeeb06e203b4"
 
 [[projects]]
   branch = "master"
@@ -469,13 +469,13 @@
     "html",
     "html/atom"
   ]
-  revision = "cbe0f9307d0156177f9dd5dc85da1a31abc5f2fb"
+  revision = "e0c57d8f86c17f0724497efcb3bc617e82834821"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sync"
   packages = ["errgroup"]
-  revision = "fd80eb99c8f653c847d294a001bdf2a3a6f768f5"
+  revision = "1d60e4601c6fd243af51cc01ddf169918a5407ca"
 
 [[projects]]
   branch = "master"
@@ -484,7 +484,7 @@
     "unix",
     "windows"
   ]
-  revision = "f6cff0780e542efa0c8e864dc8fa522808f6a598"
+  revision = "2f1e207ee39ff70f3433e49c6eb52677a515e3b5"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
