@@ -1,9 +1,11 @@
 package actions
 
 import (
+	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/uuid"
 	"github.com/pkg/errors"
 )
 
@@ -79,6 +81,10 @@ func (v TeamsResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new Team.
 // This function is mapped to the path GET /teams/new
 func (v TeamsResource) New(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Make team available inside the html template
 	c.Set("team", &models.Team{})
 
@@ -88,6 +94,10 @@ func (v TeamsResource) New(c buffalo.Context) error {
 // Create adds a Team to the DB. This function is mapped to the
 // path POST /teams
 func (v TeamsResource) Create(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Allocate an empty Team
 	team := &models.Team{}
 
@@ -130,6 +140,10 @@ func (v TeamsResource) Create(c buffalo.Context) error {
 // Edit renders a edit form for a Team. This function is
 // mapped to the path GET /teams/{team_id}/edit
 func (v TeamsResource) Edit(c buffalo.Context) error {
+	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -151,6 +165,10 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 // Update changes a Team in the DB. This function is mapped to
 // the path PUT /teams/{team_id}
 func (v TeamsResource) Update(c buffalo.Context) error {
+	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -196,6 +214,10 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 // Destroy deletes a Team from the DB. This function is mapped
 // to the path DELETE /teams/{team_id}
 func (v TeamsResource) Destroy(c buffalo.Context) error {
+	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
