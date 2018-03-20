@@ -3,6 +3,8 @@
 </div>
 
 <%= form_for(user, {action: userPath({ user_id: user.ID }), method: "PUT"}) { %>
+  <%= f.CheckboxTag("IsSuperAdmin",{}) %>
+  <%= f.HiddenTag("IsSuperAdmin",{"value":false}) %>
   <%= partial("users/form.html") %>
   <a href="<%= userPath({ user_id: user.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>

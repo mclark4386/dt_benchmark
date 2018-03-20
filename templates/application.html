@@ -8,6 +8,8 @@
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
+    <%= contentOf("extraStyle") %>
+    <%= contentOf("pageScript") %>
   </head>
   <body>
     <nav>

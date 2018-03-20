@@ -7,18 +7,30 @@
 
 <table class="table table-striped">
   <thead>
-  <th>Email</th>
+    <th>Email</th>
+    <th>Is Super Admin</th>
     <th>&nbsp;</th>
   </thead>
   <tbody>
     <%= for (user) in users { %>
       <tr>
-      <td><%= user.Email %></td>
+        <td><%= user.Email %></td>
+        <td>
+          <%= if(user.IsSuperAdmin) {%>
+            <i class="fa fa-check-circle-o text-success"></i>
+          <% } %>
+        </td>
         <td>
           <div class="pull-right">
             <a href="<%= userPath({ user_id: user.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editUserPath({ user_id: user.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= userPath({ user_id: user.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <%= current_user = getCurrentUser() %>
+
+            <%= if(isCurrentUserSuperAdmin() || user.ID.String() == current_user.ID.String()) { %>
+              <a href="<%= editUserPath({ user_id: user.ID }) %>" class="btn btn-warning">Edit</a>
+            <% } %>
+            <%= if(isCurrentUserSuperAdmin()) { %>
+              <a href="<%= userPath({ user_id: user.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <% } %>
           </div>
         </td>
       </tr>

@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr"
 )
@@ -18,6 +19,11 @@ func init() {
 		AssetsBox:    assetsBox,
 
 		// Add template helpers here:
-		Helpers: render.Helpers{},
+		Helpers: render.Helpers{
+			"isCurrentUserSuperAdmin":       helpers.IsCurrentUserSuperAdmin,
+			"getCurrentUser":                helpers.GetCurrentUserInTemplate,
+			"isLoggedIn":                    helpers.IsLoggedInInTemplate,
+			"isCurrentUserTeamOrSuperAdmin": helpers.IsCurrentUserTeamOrSuperAdmin,
+		},
 	})
 }

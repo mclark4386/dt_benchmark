@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
@@ -27,6 +28,10 @@ type PagesResource struct {
 // List gets all Pages. This function is mapped to the path
 // GET /pages
 func (v PagesResource) List(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -44,13 +49,10 @@ func (v PagesResource) List(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
-	// Make Pages available inside the html template
-	c.Set("pages", pages)
-
 	// Add the paginator to the context so it can be used in the template.
 	c.Set("pagination", q.Paginator)
 
-	return c.Render(200, r.HTML("pages/index.html"))
+	return c.Render(200, r.Auto(c, pages))
 }
 
 // Show gets the data for one Page. This function is mapped to
@@ -72,24 +74,26 @@ func (v PagesResource) Show(c buffalo.Context) error {
 		}
 	}
 
-	// Make page available inside the html template
-	c.Set("page", page)
-
-	return c.Render(200, r.HTML("pages/show.html"))
+	return c.Render(200, r.Auto(c, page))
 }
 
 // New renders the form for creating a new Page.
 // This function is mapped to the path GET /pages/new
 func (v PagesResource) New(c buffalo.Context) error {
-	// Make page available inside the html template
-	c.Set("page", &models.Page{})
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
 
-	return c.Render(200, r.HTML("pages/new.html"))
+	return c.Render(200, r.Auto(c, &models.Page{}))
 }
 
 // Create adds a Page to the DB. This function is mapped to the
 // path POST /pages
 func (v PagesResource) Create(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Allocate an empty Page
 	page := &models.Page{}
 
@@ -111,27 +115,28 @@ func (v PagesResource) Create(c buffalo.Context) error {
 	}
 
 	if verrs.HasAny() {
-		// Make page available inside the html template
-		c.Set("page", page)
-
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
 		// Render again the new.html template that the user can
 		// correct the input.
-		return c.Render(422, r.HTML("pages/new.html"))
+		return c.Render(422, r.Auto(c, page))
 	}
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "Page was created successfully")
 
 	// and redirect to the pages index page
-	return c.Redirect(302, "/pages/%s", page.ID)
+	return c.Render(201, r.Auto(c, page))
 }
 
 // Edit renders a edit form for a Page. This function is
 // mapped to the path GET /pages/{page_id}/edit
 func (v PagesResource) Edit(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -145,14 +150,16 @@ func (v PagesResource) Edit(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
-	// Make page available inside the html template
-	c.Set("page", page)
-	return c.Render(200, r.HTML("pages/edit.html"))
+	return c.Render(200, r.Auto(c, page))
 }
 
 // Update changes a Page in the DB. This function is mapped to
 // the path PUT /pages/{page_id}
 func (v PagesResource) Update(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -177,27 +184,28 @@ func (v PagesResource) Update(c buffalo.Context) error {
 	}
 
 	if verrs.HasAny() {
-		// Make page available inside the html template
-		c.Set("page", page)
-
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
 		// Render again the edit.html template that the user can
 		// correct the input.
-		return c.Render(422, r.HTML("pages/edit.html"))
+		return c.Render(422, r.Auto(c, page))
 	}
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "Page was updated successfully")
 
 	// and redirect to the pages index page
-	return c.Redirect(302, "/pages/%s", page.ID)
+	return c.Render(200, r.Auto(c, page))
 }
 
 // Destroy deletes a Page from the DB. This function is mapped
 // to the path DELETE /pages/{page_id}
 func (v PagesResource) Destroy(c buffalo.Context) error {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
+		return nil
+	}
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -220,5 +228,5 @@ func (v PagesResource) Destroy(c buffalo.Context) error {
 	c.Flash().Add("success", "Page was destroyed successfully")
 
 	// Redirect to the pages index page
-	return c.Redirect(302, "/pages")
+	return c.Render(200, r.Auto(c, page))
 }

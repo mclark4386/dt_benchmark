@@ -21,6 +21,7 @@ type User struct {
 	PasswordHash         string    `json:"-" db:"password_hash"`
 	Password             string    `json:"-" db:"-"`
 	PasswordConfirmation string    `json:"-" db:"-"`
+	IsSuperAdmin         bool      `json:"super_admin" db:"super_admin"`
 }
 
 // String is not required by pop and may be deleted
