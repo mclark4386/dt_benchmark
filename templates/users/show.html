@@ -9,5 +9,9 @@
 </ul>
 
 <p>
-  <strong>Email</strong>: <%= user.Email %>
+    <strong>Email</strong>: <%= user.Email %>
+
+    <%= if(user.IsSuperAdmin) {%>
+    <span><i class="fa fa-check-circle-o text-success"></i></span>
+    <% } %>
 </p>
