@@ -29,6 +29,10 @@ func IsCurrentUserSuperAdmin(c plush.HelperContext) bool {
 	return GetCurrentUserInTemplate(c).IsSuperAdmin
 }
 
+func IsCurrentUserTeamOrSuperAdmin(team_id uuid.UUID, c plush.HelperContext) bool {
+	return GetCurrentUserInTemplate(c).IsSuperAdmin
+}
+
 // Action Helpers
 
 func GetCurrentUser(c buffalo.Context) *models.User {

@@ -20,9 +20,10 @@ func init() {
 
 		// Add template helpers here:
 		Helpers: render.Helpers{
-			"isCurrentUserSuperAdmin": helpers.IsCurrentUserSuperAdmin,
-			"getCurrentUser":          helpers.GetCurrentUserInTemplate,
-			"isLoggedIn":              helpers.IsLoggedInInTemplate,
+			"isCurrentUserSuperAdmin":       helpers.IsCurrentUserSuperAdmin,
+			"getCurrentUser":                helpers.GetCurrentUserInTemplate,
+			"isLoggedIn":                    helpers.IsLoggedInInTemplate,
+			"isCurrentUserTeamOrSuperAdmin": helpers.IsCurrentUserTeamOrSuperAdmin,
 		},
 	})
 }

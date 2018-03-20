@@ -23,8 +23,10 @@
         <td>
           <div class="pull-right">
             <a href="<%= teamPath({ team_id: team.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editTeamPath({ team_id: team.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= teamPath({ team_id: team.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <%= if(isCurrentUserTeamOrSuperAdmin(team.ID)) {%>
+              <a href="<%= editTeamPath({ team_id: team.ID }) %>" class="btn btn-warning">Edit</a>
+              <a href="<%= teamPath({ team_id: team.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <% } %>
           </div>
         </td>
       </tr>
