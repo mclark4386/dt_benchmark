@@ -9,6 +9,7 @@ func IsSuperAdmin(user *models.User) bool {
 	return user.IsSuperAdmin
 }
 
-func IsTeamAdminOrBetter(user *models.User, team_id uuid) bool {
-	return user.IsSuperAdmin && team_id, _ != uuid.NewV4()
+func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
+	temp_id := uuid.Must(uuid.NewV4())
+	return user.IsSuperAdmin && team_id != temp_id
 }
