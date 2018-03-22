@@ -21,6 +21,7 @@
             <a href="<%= pagePath({ page_id: page.ID }) %>" class="btn btn-info">View</a>
             <a href="<%= editPagePath({ page_id: page.ID }) %>" class="btn btn-warning">Edit</a>
             <a href="<%= pagePath({ page_id: page.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <a href="/pages/<%=page.Slug%>" class="btn btn-success export-btn" data-mime-type="application/json" data-page="<%=page.Slug%>">Export</a>
           </div>
         </td>
       </tr>
@@ -31,3 +32,28 @@
 <div class="text-center">
   <%= paginator(pagination) %>
 </div>
+
+<script>
+ $(() => {
+   $('.export-btn').on('click', (ev) => {
+       ev.preventDefault();
+       var slug = $(ev.target).data('page');
+       console.log(slug);
+       var mime = $(ev.target).data('mime-type');
+       console.log(mime);
+       $.ajax({
+           accepts: {text: mime},
+           processData: false,
+           dataType: 'text',
+           success: (data) => {
+               console.log(data);
+               var uri = 'data:'+mime+';charset=UTF-8,'+encodeURIComponent(data);
+               console.log(uri);
+               //               window.location = uri;
+               window.FileSaver.saveAs(new File([data], slug+".json", {type: mime+';charset=UTF-8'}));
+           }
+       });
+       return false;
+   });
+ });
+</script>

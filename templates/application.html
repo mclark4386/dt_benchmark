@@ -9,6 +9,8 @@
     <meta name="csrf-token" content="<%= authenticity_token %>" />
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
     <%= contentOf("extraStyle") %>
+
+    <%= javascriptTag("application.js") %>
     <%= contentOf("pageScript") %>
   </head>
   <body>
@@ -26,7 +28,5 @@
       <%= partial("flash.html") %>
       <%= yield %>
     </div>
-
-    <%= javascriptTag("application.js") %>
   </body>
 </html>
