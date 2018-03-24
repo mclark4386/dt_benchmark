@@ -2,7 +2,8 @@
   <h1>Pages</h1>
 </div>
 <ul class="list-unstyled list-inline">
-  <li><a href="<%= newPagesPath() %>" class="btn btn-primary">Create New Page</a></li>
+    <li><a href="<%= newPagesPath() %>" class="btn btn-primary">Create New Page</a></li>
+    <li><a href="#" class="btn btn-info" id="page_import_btn">Import</a><input type="file" id="page_import_file" accept=".json" /></li>
 </ul>
 
 <table class="table table-striped">
@@ -35,6 +36,7 @@
 
 <script>
  $(() => {
+     //set up all export buttons
    $('.export-btn').on('click', (ev) => {
        ev.preventDefault();
        var slug = $(ev.target).data('page');
@@ -55,5 +57,46 @@
        });
        return false;
    });
+
+     //setup import button/system
+     $('#page_import_btn').on('click', (ev) => {
+         ev.preventDefault();
+         console.log("import!");
+
+         var file_input = document.getElementById('page_import_file');
+
+         if(file_input.files.length > 0){
+             var file = file_input.files[0];
+             if(!file){
+                 return false;
+             }
+
+             var reader = new FileReader();
+             reader.onload = (e) => {
+                 var contents = e.target.result;
+                 var objs = [];
+                 var url = "/pages"
+                 try{
+                     objs = JSON.parse(contents);
+                     console.log("objects to import:",objs.length);
+                 }catch{
+                     alert("Please select only valid JSON files!");
+                 }
+
+                 // import eash object.... may want to make a batch create action later...
+                 for(obj in objs){
+//                     $.post(
+//                         url
+                 }
+
+                 return false;
+             };
+             reader.readAsText(file);
+         } else {
+             alert("Please select file first!");
+         }
+
+         return false;
+     });
  });
 </script>
