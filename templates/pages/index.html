@@ -2,7 +2,8 @@
   <h1>Pages</h1>
 </div>
 <ul class="list-unstyled list-inline">
-  <li><a href="<%= newPagesPath() %>" class="btn btn-primary">Create New Page</a></li>
+    <li><a href="<%= newPagesPath() %>" class="btn btn-primary">Create New Page</a></li>
+    <li><a href="#" class="btn btn-info" id="page_import_btn">Import</a><input type="file" id="page_import_file" accept=".json" /></li>
 </ul>
 
 <table class="table table-striped">
@@ -21,6 +22,7 @@
             <a href="<%= pagePath({ page_id: page.ID }) %>" class="btn btn-info">View</a>
             <a href="<%= editPagePath({ page_id: page.ID }) %>" class="btn btn-warning">Edit</a>
             <a href="<%= pagePath({ page_id: page.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <a href="/pages/<%=page.Slug%>" class="btn btn-success export-btn" data-mime-type="application/json" data-page="<%=page.Slug%>">Export</a>
           </div>
         </td>
       </tr>
@@ -31,3 +33,93 @@
 <div class="text-center">
   <%= paginator(pagination) %>
 </div>
+
+<script>
+ $(() => {
+     //set up all export buttons
+   $('.export-btn').on('click', (ev) => {
+       ev.preventDefault();
+       var slug = $(ev.target).data('page');
+       console.log(slug);
+       var mime = $(ev.target).data('mime-type');
+       console.log(mime);
+       $.ajax({
+           accepts: {text: mime},
+           processData: false,
+           dataType: 'text',
+           success: (data) => {
+               console.log(data);
+               var uri = 'data:'+mime+';charset=UTF-8,'+encodeURIComponent(data);
+               console.log(uri);
+               //               window.location = uri;
+               window.FileSaver.saveAs(new File([data], slug+".json", {type: mime+';charset=UTF-8'}));
+           }
+       });
+       return false;
+   });
+
+     //setup import button/system
+     $('#page_import_btn').on('click', (ev) => {
+         ev.preventDefault();
+         console.log("import!");
+
+         var file_input = document.getElementById('page_import_file');
+
+         if(file_input.files.length > 0){
+             var file = file_input.files[0];
+             if(!file){
+                 return false;
+             }
+
+             var reader = new FileReader();
+             reader.onload = (e) => {
+                 var contents = e.target.result;
+                 var objs = [];
+                 var url = "/pages"
+                 try{
+                     objs = JSON.parse(contents);
+                     console.log("objects to import:",objs.length);
+                 }catch{
+                     alert("Please select only valid JSON files!");
+                 }
+
+                 // import eash object.... may want to make a batch create action later...
+                 for(i in objs){
+                     var obj = objs[i];
+                     obj.authenticity_token = "<%= authenticity_token %>";
+                     delete obj["id"];
+                     delete obj["created_at"];
+                     delete obj["updated_at"];
+                     console.log("obj:",obj);
+                     var jqxhr = $.ajax({url: url,
+                                         type: "POST",
+                                        data: JSON.stringify(obj),
+                                         dataType: "application/json",
+                                         contentType: "application/json",
+                                  })
+                                  .done(() => {
+                                      window.location = url;
+                                  })
+                                  .fail(()=>{
+                                      if(jqxhr.status < 400){
+                                          //not really a failure
+                                          window.location = url;
+                                      }else{
+                                          console.log(jqxhr);
+                                          alert("Could not import file!");
+                                      }
+                                  })
+
+                 }
+
+                 return false;
+             };
+             reader.readAsText(file);
+         } else {
+             alert("Please select file first!");
+         }
+
+         return false;
+     });
+ });
+</script>

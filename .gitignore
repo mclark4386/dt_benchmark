@@ -12,3 +12,4 @@ dt_benchmark
 .vscode/
 .grifter/
 .env
+redis-data/
