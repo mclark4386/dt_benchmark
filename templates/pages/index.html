@@ -84,9 +84,32 @@
                  }
 
                  // import eash object.... may want to make a batch create action later...
-                 for(obj in objs){
-//                     $.post(
-//                         url
+                 for(i in objs){
+                     var obj = objs[i];
+                     obj.authenticity_token = "<%= authenticity_token %>";
+                     delete obj["id"];
+                     delete obj["created_at"];
+                     delete obj["updated_at"];
+                     console.log("obj:",obj);
+                     var jqxhr = $.ajax({url: url,
+                                         type: "POST",
+                                        data: JSON.stringify(obj),
+                                         dataType: "application/json",
+                                         contentType: "application/json",
+                                  })
+                                  .done(() => {
+                                      window.location = url;
+                                  })
+                                  .fail(()=>{
+                                      if(jqxhr.status < 400){
+                                          //not really a failure
+                                          window.location = url;
+                                      }else{
+                                          console.log(jqxhr);
+                                          alert("Could not import file!");
+                                      }
+                                  })
+
                  }
 
                  return false;
