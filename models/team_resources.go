@@ -41,12 +41,12 @@ func (t *TeamResource) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.UUIDIsPresent{Field: t.TeamID, Name:"TeamID"},
 		&validators.UUIDIsPresent{Field: t.ResourceID, Name: "ResourceID"},
 		&validators.FuncValidator{
-			
+
 			Fn: func() bool {
 				var b bool
-				q := tx.Where("team id = ?", t.TeamID)
+					q := tx.Where("team_id = ?", t.TeamID)
 				if t.ResourceID != uuid.Nil {
-					q = q.Where("id != ?", t.ID)
+					q = q.Where("resource_id != ?", t.ID)
 				}
 				b, err = q.Exists(t)
 				if err != nil {
