@@ -8,7 +8,6 @@ import (
 	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
-
 )
 
 type TeamResource struct {
@@ -17,6 +16,8 @@ type TeamResource struct {
 	UpdatedAt  time.Time `json:"updated_at" db:"updated_at"`
 	TeamID     uuid.UUID `json:"team_id" db:"team_id"`
 	ResourceID uuid.UUID `json:"resource_id" db:"resource_id"`
+	Team       Team      `belongs_to:"teams"`
+	Resource   Resource  `belongs_to:"resources"`
 }
 
 // String is not required by pop and may be deleted
@@ -38,7 +39,7 @@ func (t *TeamResource) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	var err error
 	return validate.Validate(
 
-		&validators.UUIDIsPresent{Field: t.TeamID, Name:"TeamID"},
+		&validators.UUIDIsPresent{Field: t.TeamID, Name: "TeamID"},
 		&validators.UUIDIsPresent{Field: t.ResourceID, Name: "ResourceID"},
 		&validators.FuncValidator{
 
@@ -54,7 +55,6 @@ func (t *TeamResource) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		},
 	), err
 }
-
 
 /*
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.

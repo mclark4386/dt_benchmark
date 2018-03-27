@@ -17,6 +17,7 @@ type Team struct {
 	Name        string    `json:"name" db:"name"`
 	Description string    `json:"description" db:"description"`
 	PageSlug    string    `json:"page_slug" db:"page_slug"`
+	Resources   Resources `many_to_many:"team_resources"`
 }
 
 // String is not required by pop and may be deleted
