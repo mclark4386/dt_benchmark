@@ -10,13 +10,37 @@
     <link rel="icon" href="<%= assetPath("images/favicon.ico") %>">
   </head>
   <body>
-    <nav>
+    <nav class="nav justify-content-center">
+      <li class="nav-item">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Connect</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Campuses</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Ministries</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Resources</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Media</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Giving</a>
+      </li>
       <%= if (current_user) { %>
         <h1><%= current_user.Email %></h1>
         <a href="/logout" data-method="DELETE">Sign Out</a>
       <% } else { %>
-        <a href="/login" class="btn btn-primary">Sign In</a>
-        <a href="/users/new" class="btn btn-success">Register</a>
+
+        <a href="/login" class="btn btn-light">Sign In</a>
+
+        <a href="/users/new" class="btn btn-outline-secondary">Register</a>
       <% } %>
       </nav>
 
