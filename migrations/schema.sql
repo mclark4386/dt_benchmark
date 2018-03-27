@@ -76,6 +76,21 @@ CREATE TABLE public.schema_migration (
 ALTER TABLE public.schema_migration OWNER TO postgres;
 
 --
+-- Name: team_resources; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.team_resources (
+    id uuid NOT NULL,
+    team_id uuid NOT NULL,
+    resource_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.team_resources OWNER TO postgres;
+
+--
 -- Name: teams; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -121,6 +136,14 @@ ALTER TABLE ONLY public.pages
 
 ALTER TABLE ONLY public.resources
     ADD CONSTRAINT resources_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: team_resources team_resources_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.team_resources
+    ADD CONSTRAINT team_resources_pkey PRIMARY KEY (id);
 
 
 --
