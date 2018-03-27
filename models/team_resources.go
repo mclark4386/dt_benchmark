@@ -44,10 +44,7 @@ func (t *TeamResource) Validate(tx *pop.Connection) (*validate.Errors, error) {
 
 			Fn: func() bool {
 				var b bool
-					q := tx.Where("team_id = ?", t.TeamID)
-				if t.ResourceID != uuid.Nil {
-					q = q.Where("resource_id != ?", t.ID)
-				}
+				q := tx.Where("team_id = ?", t.TeamID).Where("resource_id = ?", t.ID)
 				b, err = q.Exists(t)
 				if err != nil {
 					return false
