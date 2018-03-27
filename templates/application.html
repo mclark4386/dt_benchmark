@@ -11,27 +11,92 @@
   </head>
   <body>
     <nav class="nav justify-content-center">
-      <li class="nav-item">
-      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-
+      <li class="nav-item dropdown">
+      <a class="nav-link" id="aboutDropDownLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+      <div class="dropdown-menu" aria-labelledby="aboutDropDownLink">
+        <a class="dropdown-item" href="#">Our Pastor</a>
+        <a class="dropdown-item" href="#">Our Story</a>
+        <a class="dropdown-item" href="#">Our Purpose</a>
+        <a class="dropdown-item" href="#">Our Team</a>
+        <a class="dropdown-item" href="#">Our Leadership</a>
+        <a class="dropdown-item" href="#">Statement of Faith</a>
+        <a class="dropdown-item" href="#">Common Questions</a>
+        <a class="dropdown-item" href="#">Highland Cafe</a>
+        <a class="dropdown-item" href="#">Contact Us</a>
+      </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Connect</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="connectDropdownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Connect</a>
+        <div class="dropdown-menu" aria-labelledby="connectDropDownLink">
+          <a class="dropdown-item" href="#">Join Highlands</a>
+          <a class="dropdown-item" href="#">Baptism</a>
+          <a class="dropdown-item" href="#">Small Groups</a>
+          <a class="dropdown-item" href="#">Growth Track</a>
+          <a class="dropdown-item" href="#">Dream Team</a>
+          <a class="dropdown-item" href="#">Events</a>
+          <a class="dropdown-item" href="#">Social Media</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Campuses</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="campusesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Campuses</a>
+          <div class="dropdown-menu" aria-labelledby="campusesDropDownLink">
+            <a class="dropdown-item" href="#">Alabaster</a>
+            <a class="dropdown-item" href="#">Auburn</a>
+            <a class="dropdown-item" href="#">Fultondale</a>
+            <a class="dropdown-item" href="#">Gadsden</a>
+            <a class="dropdown-item" href="#">Grant View</a>
+            <a class="dropdown-item" href="#">Grants Mill</a>
+            <a class="dropdown-item" href="#">The Chapel</a>
+            <a class="dropdown-item" href="#">Greystone</a>
+            <a class="dropdown-item" href="#">Huntsville</a>
+            <a class="dropdown-item" href="#">McCalla</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">More</a>
+          </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Ministries</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="ministriesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Ministries</a>
+        <div class="dropdown-menu" aria-labelledby="ministriesDropDownLink">
+          <a class="dropdown-item" href="#">Highland Kids</a>
+          <a class="dropdown-item" href="#">Highland Students</a>
+          <a class="dropdown-item" href="#">Highland College</a>
+          <a class="dropdown-item" href="#">Marriage and Family</a>
+          <a class="dropdown-item" href="#">Outreach</a>
+          <a class="dropdown-item" href="#">Español</a>
+          <a class="dropdown-item" href="#">The Chapel</a>
+          <a class="dropdown-item" href="#">Prayers</a>
+          <a class="dropdown-item" href="#">Missions</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Resources</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="resourcesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Resources</a>
+        <div class="dropdown-menu" aria-labelledby="resourcesDropDownLink">
+          <a class="dropdown-item" href="#">One Year Bible</a>
+          <a class="dropdown-item" href="#">Request Prayer</a>
+          <a class="dropdown-item" href="#">Share Your Story</a>
+          <a class="dropdown-item" href="#">Pastors & Leaders</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Media</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="mediaDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Media</a>
+        <div class="dropdown-menu" aria-labelledby="mediaDropDownLink">
+          <a class="dropdown-item" href="#">Message Archive</a>
+          <a class="dropdown-item" href="#">Series Archive</a>
+          <a class="dropdown-item" href="#">Current Message</a>
+          <a class="dropdown-item" href="#">First Wednesday</a>
+          <a class="dropdown-item" href="#">Live Webcast</a>
+          <a class="dropdown-item" href="#">Podcast</a>
+          <a class="dropdown-item" href="#">Apps</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Giving</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="givingDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Giving</a>
+        <div class="dropdown-menu" aria-labelledby="mediaDropDownLink">
+          <a class="dropdown-item" href="#">Give Online</a>
+          <a class="dropdown-item" href="#">Legacy Team</a>
+          <a class="dropdown-item" href="#">Legacy Offering</a>
+          <a class="dropdown-item" href="#">Text to Give</a>
+        </div>
       </li>
       <%= if (current_user) { %>
         <h1><%= current_user.Email %></h1>

@@ -19,9 +19,17 @@
   padding-bottom: 5em;
 
 }
+/*New User element*/
+.newUser{
+  box-shadow: 0px 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  max-width: 27em;
+  border-radius: .5em;
+  margin-top: 5em;
+  padding-bottom: 5em;
+}
 /*nav links*/
 .nav-item{
-  font-weight: 500;
+  font-weight: 450;
 }
 
 .nav-item a{
@@ -29,9 +37,17 @@
 }
 
 .nav-item a:visited{
-  color: grey;
+  color: #C8C8C8;
 }
 
 .nav-item a:hover{
-  color: lightgrey;
+  color:  #4786a5;
+}
+
+.dropdown:hover .dropdown-menu{
+  display: block;
+}
+
+.col{
+  float: left;
 }
