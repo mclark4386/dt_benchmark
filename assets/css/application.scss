@@ -1,2 +1,53 @@
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~font-awesome/css/font-awesome.css";
+
+
+/*Nav*/
+.nav{
+  margin-top: 5em;
+}
+
+.header{
+  font-weight: lighter;
+}
+/*signIn element*/
+.signIn{
+  box-shadow: 0px 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  max-width: 27em;
+  border-radius: .5em;
+  margin-top: 5em;
+  padding-bottom: 5em;
+
+}
+/*New User element*/
+.newUser{
+  box-shadow: 0px 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  max-width: 27em;
+  border-radius: .5em;
+  margin-top: 5em;
+  padding-bottom: 5em;
+}
+/*nav links*/
+.nav-item{
+  font-weight: 450;
+}
+
+.nav-item a{
+  color: #4786a5;
+}
+
+.nav-item a:visited{
+  color: #C8C8C8;
+}
+
+.nav-item a:hover{
+  color:  #4786a5;
+}
+
+.dropdown:hover .dropdown-menu{
+  display: block;
+}
+
+.col{
+  float: left;
+}

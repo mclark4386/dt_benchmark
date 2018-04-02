@@ -1,8 +1,19 @@
-<h1>Sign In</h1>
+<div class="signIn card-body mx-auto">
+  <h2 class="header text-center" style="color: #4786a5">Church of the Highlands</h2>
+  <h4 class="header text-center"> Dream Team</h4>
+
+
 
 
 <%= form_for(user, {action: loginPath()}) { %>
   <%= f.InputTag("Email") %>
   <%= f.InputTag("Password", {type: "password"}) %>
-  <button class="btn btn-success">Sign In!</button>
+  <div class="checkbox text-center text-secondary mb-3">
+    <label>
+    <input type="checkbox" value="remember-me">
+      Remember Me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-info btn-block" style="font-weight:bold;">Sign In!</button>
 <% } %>
+</div>

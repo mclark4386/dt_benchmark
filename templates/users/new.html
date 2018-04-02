@@ -1,8 +1,11 @@
+<div class="card-body newUser mx-auto">
 <div class="page-header">
-  <h1>New User</h1>
+  <h1 class="header" style="color: #4786a5">New User </h1>
 </div>
 
 <%= form_for(user, {action: usersPath(), method: "POST"}) { %>
   <%= partial("users/form.html") %>
-  <a href="<%= usersPath() %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+
+    <a href="<%= usersPath() %>" class="btn btn-outline-info" data-confirm="Are you sure?">Cancel</a>
+  </div>
 <% } %>
