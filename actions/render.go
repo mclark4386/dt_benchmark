@@ -24,6 +24,8 @@ func init() {
 			"getCurrentUser":                helpers.GetCurrentUserInTemplate,
 			"isLoggedIn":                    helpers.IsLoggedInInTemplate,
 			"isCurrentUserTeamOrSuperAdmin": helpers.IsCurrentUserTeamOrSuperAdmin,
+			"arrayContains":                 helpers.StringArrayContains,
+			"append":                        helpers.ArrayAppend,
 		},
 	})
 }

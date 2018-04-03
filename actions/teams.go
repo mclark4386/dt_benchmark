@@ -121,22 +121,19 @@ func (v TeamsResource) Create(c buffalo.Context) error {
 	}
 
 	if verrs.HasAny() {
-		// Make team available inside the html template
-		c.Set("team", team)
-
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
 		// Render again the new.html template that the user can
 		// correct the input.
-		return c.Render(422, r.HTML("teams/new.html"))
+		return c.Render(422, r.Auto(c, team))
 	}
 
 	// If there are no errors set a success message
 	c.Flash().Add("success", "Team was created successfully")
 
 	// and redirect to the teams index page
-	return c.Redirect(302, "/teams/%s", team.ID)
+	return c.Render(200, r.Auto(c, team))
 }
 
 // Edit renders a edit form for a Team. This function is
@@ -168,6 +165,12 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 	}
 
 	c.Set("resources", resources)
+
+	team_resources := []string{}
+	for _, resource := range team.Resources {
+		team_resources = append(team_resources, resource.ID.String())
+	}
+	c.Set("team_resources", team_resources)
 
 	return c.Render(200, r.Auto(c, team))
 }
@@ -209,7 +212,7 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
-	team.UpdateResources(elements.Resources)
+	team.UpdateResources(tx, elements.Resources)
 
 	verrs, err := tx.ValidateAndUpdate(team)
 	if err != nil {
