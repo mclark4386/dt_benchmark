@@ -3,6 +3,26 @@
 </div>
 
 <%= form_for(team, {action: teamPath({ team_id: team.ID }), method: "PUT"}) { %>
+   <div class="form-group">
+      <label for="team-Resources">Resources</label>
+      <div>
+        <select multiple="multiple" class="form-control simple-select2" id="team-Resources" name="Resources">
+          <%= for (resource) in resources { %>
+            <option value="<%= resource.ID %>" <%= if (arrayContains(team_resources, resource.ID.String())) { %> selected="selected" <% } %>><%= resource.Title %></option>
+          <% } %>
+        </select>
+      </div>
+    </div>
   <%= partial("teams/form.html") %>
   <a href="<%= teamPath({ team_id: team.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
+
+  <script>
+      $(document).ready(function() {
+      $('select').select2({
+      theme: 'bootstrap4',
+      placeholder: "Select an option",
+      allowClear: true
+      });
+      });
+  </script>

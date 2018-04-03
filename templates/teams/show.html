@@ -19,3 +19,18 @@
 <p>
   <strong>PageSlug</strong>: <%= team.PageSlug %>
 </p>
+
+<%= if (len(team.Resources) > 0) {%>
+<div class="card">
+    <div class="card-header">
+       <h3>Resources</h3>
+    </div>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            <%= for (resource) in team.Resources { %>
+                <li><a href="<%= resource.Url %>"><%= resource.Title %> </a></li>
+            <% } %>
+        </ul>
+    </div>
+</div>
+<% } %>
