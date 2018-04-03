@@ -3,6 +3,14 @@
 </div>
 
 <%= form_for(team, {action: teamPath({ team_id: team.ID }), method: "PUT"}) { %>
+  <div class="form-group">
+    <label>Resources</label>
+    <select class="form-control" id="team-Resources" name="Resources">
+        <%= for (resource) in resources { %>
+          <option value="<%= resource.ID %>"><%= resource.Title %></option>
+        <% } %>
+    </select>
+  </div>
   <%= partial("teams/form.html") %>
   <a href="<%= teamPath({ team_id: team.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>

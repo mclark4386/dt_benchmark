@@ -1,8 +1,11 @@
 package actions
 
 import (
+	"fmt"
+
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
@@ -72,10 +75,9 @@ func (v TeamsResource) Show(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
-	// Make team available inside the html template
-	c.Set("team", team)
+	tx.Load(team)
 
-	return c.Render(200, r.HTML("teams/show.html"))
+	return c.Render(200, r.Auto(c, team))
 }
 
 // New renders the form for creating a new Team.
@@ -155,11 +157,19 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 
 	if err := tx.Find(team, c.Param("team_id")); err != nil {
 		return c.Error(404, err)
+	} else {
+		tx.Load(team)
 	}
 
-	// Make team available inside the html template
-	c.Set("team", team)
-	return c.Render(200, r.HTML("teams/edit.html"))
+	resources := models.Resources{}
+
+	if err := tx.All(&resources); err != nil {
+		fmt.Printf("ERROR pulling resources: %v\n", err)
+	}
+
+	c.Set("resources", resources)
+
+	return c.Render(200, r.Auto(c, team))
 }
 
 // Update changes a Team in the DB. This function is mapped to
@@ -175,6 +185,18 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 		return errors.WithStack(errors.New("no transaction found"))
 	}
 
+	type UpdateElements struct {
+		Resources []string `json:"resources"`
+	}
+
+	elements := UpdateElements{}
+
+	if err := c.Bind(&elements); err != nil {
+		return errors.WithStack(err)
+	}
+
+	fmt.Printf("================\nupdate elements: %v\n", elements)
+
 	// Allocate an empty Team
 	team := &models.Team{}
 
@@ -186,6 +208,8 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 	if err := c.Bind(team); err != nil {
 		return errors.WithStack(err)
 	}
+
+	team.UpdateResources(elements.Resources)
 
 	verrs, err := tx.ValidateAndUpdate(team)
 	if err != nil {

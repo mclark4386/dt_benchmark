@@ -74,3 +74,8 @@ func (t *Team) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 func (t *Team) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
+
+//Should remove excess and add new resources
+func (t *Team) UpdateResources(resources []string) {
+
+}
