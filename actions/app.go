@@ -5,11 +5,11 @@ import (
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/envy"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo/middleware/csrf"
 	"github.com/gobuffalo/buffalo/middleware/i18n"
 	"github.com/gobuffalo/packr"
+	"github.com/mclark4386/buffalo_helpers"
 )
 
 // ENV is used to help switch settings based on where the
@@ -26,7 +26,7 @@ func App() *buffalo.App {
 		app = buffalo.New(buffalo.Options{
 			Env:         ENV,
 			SessionName: "_dt_benchmark_session",
-			PreWares:    []buffalo.PreWare{helpers.AutoSetContentType},
+			PreWares:    []buffalo.PreWare{buffalo_helpers.AutoSetContentType},
 		})
 
 		if ENV == "development" {
