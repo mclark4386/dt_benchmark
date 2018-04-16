@@ -26,12 +26,6 @@
   version = "v1.1.0"
 
 [[projects]]
-  name = "github.com/daviddengcn/go-colortext"
-  packages = ["."]
-  revision = "17e75f6184bc9e727756cd0d82e0af58b1fc7191"
-  version = "1.0.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/dustin/go-humanize"
   packages = ["."]
@@ -109,8 +103,8 @@
     "fizz/translators",
     "nulls"
   ]
-  revision = "cb44fc0434884cae6aa74d56e9900e3e58f84ac1"
-  version = "v4.2.2"
+  revision = "f3c6f37f77403f0a59d6666ca8529d9dd1b4281b"
+  version = "v4.5.0"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -253,39 +247,15 @@
   revision = "1eede1f49c9648490dcabd7828c2f39b560e7040"
 
 [[projects]]
-  branch = "master"
   name = "github.com/mattn/anko"
   packages = [
     "ast",
-    "builtins",
-    "builtins/encoding/json",
-    "builtins/errors",
-    "builtins/flag",
-    "builtins/fmt",
-    "builtins/github.com/daviddengcn/go-colortext",
-    "builtins/io",
-    "builtins/io/ioutil",
-    "builtins/math",
-    "builtins/math/big",
-    "builtins/math/rand",
-    "builtins/net",
-    "builtins/net/http",
-    "builtins/net/url",
-    "builtins/os",
-    "builtins/os/exec",
-    "builtins/os/signal",
-    "builtins/path",
-    "builtins/path/filepath",
-    "builtins/regexp",
-    "builtins/runtime",
-    "builtins/sort",
-    "builtins/strconv",
-    "builtins/strings",
-    "builtins/time",
+    "core",
     "parser",
     "vm"
   ]
-  revision = "d5441ca3f0c7e071a9ede864f9db2cc652690f42"
+  revision = "4e3cdcf522140b26466698841bfdc3227c898043"
+  version = "v0.0.3"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -304,6 +274,12 @@
   packages = ["."]
   revision = "6c771bb9887719704b210e87e934f08be014bdb1"
   version = "v1.6.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/mclark4386/buffalo_helpers"
+  packages = ["."]
+  revision = "68aa5905f3966adfa26128f28311b4f4b40f42f4"
 
 [[projects]]
   branch = "master"
@@ -495,6 +471,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8b3fd93682200e64f019f7f8e7eb9040c6ddfeec149889800b5b8c275443dc67"
+  inputs-digest = "2186562f2080b6908144b5ec11999a5487755d451d0a1870d043a115f78dbbd4"
   solver-name = "gps-cdcl"
   solver-version = 1
