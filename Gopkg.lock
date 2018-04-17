@@ -8,6 +8,12 @@
   revision = "40e40b42552a9cb37d6e98f4ad31f63ae53ea43a"
 
 [[projects]]
+  name = "github.com/BurntSushi/toml"
+  packages = ["."]
+  revision = "b26d9c308763d68093482582cea63d69be07a0f0"
+  version = "v0.3.0"
+
+[[projects]]
   name = "github.com/ajg/form"
   packages = ["."]
   revision = "cc2954064ec9ea8d93917f0f87456e11d7b881ad"
@@ -72,14 +78,14 @@
 [[projects]]
   name = "github.com/gobuffalo/envy"
   packages = ["."]
-  revision = "197631a8f4c665cf7eeb157d5bc00d988419c4e7"
-  version = "v1.5.0"
+  revision = "ef60bfc50c8f92d1ee64674d8ce7a48f1f67625e"
+  version = "v1.6.2"
 
 [[projects]]
   name = "github.com/gobuffalo/packr"
   packages = ["."]
-  revision = "3b045e91f1107684685627303665f7e02b1be016"
-  version = "v1.10.6"
+  revision = "7f4074995d431987caaa35088199f13c44b24440"
+  version = "v1.11.0"
 
 [[projects]]
   name = "github.com/gobuffalo/plush"
@@ -90,8 +96,8 @@
     "parser",
     "token"
   ]
-  revision = "15b6b3624ed2e8c99e24323ae39ced19138bf176"
-  version = "v3.7.0"
+  revision = "2c66199a1b24507c54f4b9b478ead39890e86ff6"
+  version = "v3.7.1"
 
 [[projects]]
   name = "github.com/gobuffalo/pop"
@@ -108,9 +114,12 @@
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
-  packages = ["."]
-  revision = "1390f9a650cdb0e23499c23c50e75bf98a21f728"
-  version = "v2.0.0"
+  packages = [
+    ".",
+    "fix"
+  ]
+  revision = "f8d299e126c7b834e0b1841c421de6c0ec6b3491"
+  version = "v2.1.0"
 
 [[projects]]
   name = "github.com/gobuffalo/tags"
@@ -119,8 +128,8 @@
     "form",
     "form/bootstrap"
   ]
-  revision = "5333aff978bd35ee760641e5bec1793b263f01c9"
-  version = "v2.0.2"
+  revision = "82cd7696c84aba829b74e81814ff489b64e7b56a"
+  version = "v2.0.5"
 
 [[projects]]
   name = "github.com/gobuffalo/uuid"
@@ -180,7 +189,7 @@
     ".",
     "reflectx"
   ]
-  revision = "cf35089a197953c69420c8d0cecda90809764b1d"
+  revision = "2aeb6a910c2b94f2d5eb53d9895d80e27264ec41"
 
 [[projects]]
   name = "github.com/joho/godotenv"
@@ -195,7 +204,7 @@
     ".",
     "oid"
   ]
-  revision = "88edab0803230a3898347e77b474f8c1820a1f20"
+  revision = "d34b9ff171c21ad295489235aec8b6626023cd04"
 
 [[projects]]
   branch = "master"
@@ -211,7 +220,7 @@
   branch = "master"
   name = "github.com/markbates/grift"
   packages = ["grift"]
-  revision = "5499956ce4d9ef7fddc825ea7cb26744eeac3d79"
+  revision = "76f93617a788d350124f749acb3790276a436cc0"
 
 [[projects]]
   branch = "master"
@@ -223,7 +232,7 @@
   branch = "master"
   name = "github.com/markbates/inflect"
   packages = ["."]
-  revision = "b5c853d089b86134926274bc7a98496fee5e1d6b"
+  revision = "fbc6b23ce49e2578f572d2e72bb72fa03c7145de"
 
 [[projects]]
   name = "github.com/markbates/refresh"
@@ -244,7 +253,7 @@
   branch = "master"
   name = "github.com/markbates/willie"
   packages = ["."]
-  revision = "1eede1f49c9648490dcabd7828c2f39b560e7040"
+  revision = "67934945178ed6f7799c3a001e2dde57315558c2"
 
 [[projects]]
   name = "github.com/mattn/anko"
@@ -285,7 +294,7 @@
   branch = "master"
   name = "github.com/microcosm-cc/bluemonday"
   packages = ["."]
-  revision = "542fd4642604d0d0c26112396ce5b1a9d01eee0b"
+  revision = "995366fdf961d03629cd17361bddd32745718e2c"
 
 [[projects]]
   branch = "master"
@@ -361,7 +370,7 @@
     "reflectfind",
     "reflectsource"
   ]
-  revision = "364c5ae8518b51f5fda954762864d6f4d5c30c89"
+  revision = "47fa5b7ceee66c60ac3a281416089035bf526a3c"
 
 [[projects]]
   branch = "master"
@@ -435,7 +444,7 @@
     "blowfish",
     "ssh/terminal"
   ]
-  revision = "374053ea96cb300f8671b8d3b07edeeb06e203b4"
+  revision = "d6449816ce06963d9d136eee5a56fca5b0616e7e"
 
 [[projects]]
   branch = "master"
@@ -445,7 +454,7 @@
     "html",
     "html/atom"
   ]
-  revision = "e0c57d8f86c17f0724497efcb3bc617e82834821"
+  revision = "8d16fa6dc9a85c1cd3ed24ad08ff21cf94f10888"
 
 [[projects]]
   branch = "master"
@@ -460,13 +469,13 @@
     "unix",
     "windows"
   ]
-  revision = "2f1e207ee39ff70f3433e49c6eb52677a515e3b5"
+  revision = "ecfd8b563e1320e7282dccf28ad48ec2c68aaebf"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "7f97868eec74b32b0982dd158a51a446d1da7eb5"
-  version = "v2.1.1"
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
 
 [solve-meta]
   analyzer-name = "dep"

@@ -12,8 +12,14 @@ func IsSuperAdmin(user *models.User) bool {
 }
 
 func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
-	temp_id := uuid.Must(uuid.NewV4())
-	return user.IsSuperAdmin && team_id != temp_id
+	isTeamAdmin := false
+	for _, team := range user.TeamsIAdmin {
+		if team.ID == team_id {
+			isTeamAdmin = true
+			break
+		}
+	}
+	return user.IsSuperAdmin || isTeamAdmin
 }
 
 // Template Helpers
@@ -30,7 +36,7 @@ func IsCurrentUserSuperAdmin(c plush.HelperContext) bool {
 }
 
 func IsCurrentUserTeamOrSuperAdmin(team_id uuid.UUID, c plush.HelperContext) bool {
-	return GetCurrentUserInTemplate(c).IsSuperAdmin
+	return IsTeamAdminOrBetter(GetCurrentUserInTemplate(c), team_id)
 }
 
 // Action Helpers
@@ -50,7 +56,13 @@ func IsSuperAdminOrRedirect(c buffalo.Context) error {
 }
 
 func IsTeamAdminBetterOrRedirect(c buffalo.Context, team_id uuid.UUID) error {
-	return IsSuperAdminOrRedirect(c)
+	user := GetCurrentUser(c)
+	if IsTeamAdminOrBetter(user, team_id) {
+		return nil
+	} else {
+		c.Flash().Add("danger", "You don't have permissions for that!")
+		return c.Redirect(302, "/")
+	}
 }
 
 func IsCampusAdminBetterOrRedirect(c buffalo.Context, campus_id uuid.UUID) error {
@@ -58,7 +70,7 @@ func IsCampusAdminBetterOrRedirect(c buffalo.Context, campus_id uuid.UUID) error
 }
 
 func IsTeamOrCampusAdminBetterOrRedirect(c buffalo.Context, team_id uuid.UUID, campus_id uuid.UUID) error {
-	return IsSuperAdminOrRedirect(c)
+	return IsTeamAdminBetterOrRedirect(c, team_id)
 }
 
 func IsLeaderBetterOrRedirect(c buffalo.Context, user_id uuid.UUID) error {

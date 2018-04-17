@@ -166,11 +166,25 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 
 	c.Set("resources", resources)
 
+	users := models.Users{}
+
+	if err := tx.All(&users); err != nil {
+		fmt.Printf("ERROR pulling users: %v\n", err)
+	}
+
+	c.Set("users", users)
+
 	team_resources := []string{}
 	for _, resource := range team.Resources {
 		team_resources = append(team_resources, resource.ID.String())
 	}
 	c.Set("team_resources", team_resources)
+
+	team_admins := []string{}
+	for _, admin := range team.Admins {
+		team_admins = append(team_admins, admin.ID.String())
+	}
+	c.Set("team_admins", team_admins)
 
 	return c.Render(200, r.Auto(c, team))
 }
@@ -190,6 +204,7 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 
 	type UpdateElements struct {
 		Resources []string `json:"resources"`
+		Admins    []string `json:"admins"`
 	}
 
 	elements := UpdateElements{}
@@ -213,6 +228,7 @@ func (v TeamsResource) Update(c buffalo.Context) error {
 	}
 
 	team.UpdateResources(tx, elements.Resources)
+	team.UpdateAdmins(tx, elements.Admins)
 
 	verrs, err := tx.ValidateAndUpdate(team)
 	if err != nil {
