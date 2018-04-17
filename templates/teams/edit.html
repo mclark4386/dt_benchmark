@@ -19,7 +19,7 @@
         <div>
             <select multiple="multiple" class="form-control simple-select2" id="team-Admins" name="Admins">
                 <%= for (user) in users { %>
-                <option value="<%= user.ID %>" <%= if (arrayContains(team_admins, admin.ID.String())) { %> selected="selected" <% } %>><%= user.Email %></option>
+                <option value="<%= user.ID %>" <%= if (arrayContains(team_admins, user.ID.String())) { %> selected="selected" <% } %>><%= user.Email %></option>
                 <% } %>
             </select>
         </div>
