@@ -362,11 +362,6 @@
   version = "v1.5.1"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  revision = "36e9d2ebbde5e3f13ab2e25625fd453271d6522e"
-
-[[projects]]
   branch = "master"
   name = "github.com/serenize/snaker"
   packages = ["."]
@@ -503,6 +498,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9c51b9387c7625bb0024467be1d6cc8c159b89472d7e2f0b3faea53d117181d0"
+  inputs-digest = "4ec56a449cc078d2ac849693bebaa7322e3ec22724219bbececa808f6bceafda"
   solver-name = "gps-cdcl"
   solver-version = 1
