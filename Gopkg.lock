@@ -235,18 +235,6 @@
   revision = "fbc6b23ce49e2578f572d2e72bb72fa03c7145de"
 
 [[projects]]
-  name = "github.com/markbates/pop"
-  packages = [
-    ".",
-    "associations",
-    "columns",
-    "fizz",
-    "fizz/translators"
-  ]
-  revision = "36b03cd832288f82434d4213f4f81d6d31361a07"
-  version = "v3.60.6"
-
-[[projects]]
   name = "github.com/markbates/refresh"
   packages = [
     "refresh",
@@ -259,12 +247,6 @@
   name = "github.com/markbates/sigtx"
   packages = ["."]
   revision = "daa2e5f08161c569ca3d938d70750ccd038daf16"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/markbates/validate"
-  packages = ["."]
-  revision = "cd8cc34c703420d6b084fbbfd5085e8e71c5b830"
   version = "v1.0.0"
 
 [[projects]]
@@ -498,6 +480,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4ec56a449cc078d2ac849693bebaa7322e3ec22724219bbececa808f6bceafda"
+  inputs-digest = "2186562f2080b6908144b5ec11999a5487755d451d0a1870d043a115f78dbbd4"
   solver-name = "gps-cdcl"
   solver-version = 1
