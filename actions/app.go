@@ -49,6 +49,7 @@ func App() *buffalo.App {
 			app.Stop(err)
 		}
 		app.Use(T.Middleware())
+		app.Use(SetupNavbar)
 		app.Use(Authorize)
 
 		app.Middleware.Skip(Authorize, HomeHandler, AuthCreate, AuthNew, AuthDestroy)

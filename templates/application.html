@@ -16,104 +16,67 @@
     <%= contentOf("pageScript") %>
   </head>
   <body>
-    <nav class="nav justify-content-center">
-      <li class="nav-item dropdown">
-      <a class="nav-link" id="aboutDropDownLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-      <div class="dropdown-menu" aria-labelledby="aboutDropDownLink">
-        <a class="dropdown-item" href="#">Our Pastor</a>
-        <a class="dropdown-item" href="#">Our Story</a>
-        <a class="dropdown-item" href="#">Our Purpose</a>
-        <a class="dropdown-item" href="#">Our Team</a>
-        <a class="dropdown-item" href="#">Our Leadership</a>
-        <a class="dropdown-item" href="#">Statement of Faith</a>
-        <a class="dropdown-item" href="#">Common Questions</a>
-        <a class="dropdown-item" href="#">Highland Cafe</a>
-        <a class="dropdown-item" href="#">Contact Us</a>
-      </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="connectDropdownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Connect</a>
-        <div class="dropdown-menu" aria-labelledby="connectDropDownLink">
-          <a class="dropdown-item" href="#">Join Highlands</a>
-          <a class="dropdown-item" href="#">Baptism</a>
-          <a class="dropdown-item" href="#">Small Groups</a>
-          <a class="dropdown-item" href="#">Growth Track</a>
-          <a class="dropdown-item" href="#">Dream Team</a>
-          <a class="dropdown-item" href="#">Events</a>
-          <a class="dropdown-item" href="#">Social Media</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="campusesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Campuses</a>
-          <div class="dropdown-menu" aria-labelledby="campusesDropDownLink">
-            <a class="dropdown-item" href="#">Alabaster</a>
-            <a class="dropdown-item" href="#">Auburn</a>
-            <a class="dropdown-item" href="#">Fultondale</a>
-            <a class="dropdown-item" href="#">Gadsden</a>
-            <a class="dropdown-item" href="#">Grant View</a>
-            <a class="dropdown-item" href="#">Grants Mill</a>
-            <a class="dropdown-item" href="#">The Chapel</a>
-            <a class="dropdown-item" href="#">Greystone</a>
-            <a class="dropdown-item" href="#">Huntsville</a>
-            <a class="dropdown-item" href="#">McCalla</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">More</a>
-          </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="ministriesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Ministries</a>
-        <div class="dropdown-menu" aria-labelledby="ministriesDropDownLink">
-          <a class="dropdown-item" href="#">Highland Kids</a>
-          <a class="dropdown-item" href="#">Highland Students</a>
-          <a class="dropdown-item" href="#">Highland College</a>
-          <a class="dropdown-item" href="#">Marriage and Family</a>
-          <a class="dropdown-item" href="#">Outreach</a>
-          <a class="dropdown-item" href="#">Español</a>
-          <a class="dropdown-item" href="#">The Chapel</a>
-          <a class="dropdown-item" href="#">Prayers</a>
-          <a class="dropdown-item" href="#">Missions</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="resourcesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Resources</a>
-        <div class="dropdown-menu" aria-labelledby="resourcesDropDownLink">
-          <a class="dropdown-item" href="#">One Year Bible</a>
-          <a class="dropdown-item" href="#">Request Prayer</a>
-          <a class="dropdown-item" href="#">Share Your Story</a>
-          <a class="dropdown-item" href="#">Pastors & Leaders</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="mediaDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Media</a>
-        <div class="dropdown-menu" aria-labelledby="mediaDropDownLink">
-          <a class="dropdown-item" href="#">Message Archive</a>
-          <a class="dropdown-item" href="#">Series Archive</a>
-          <a class="dropdown-item" href="#">Current Message</a>
-          <a class="dropdown-item" href="#">First Wednesday</a>
-          <a class="dropdown-item" href="#">Live Webcast</a>
-          <a class="dropdown-item" href="#">Podcast</a>
-          <a class="dropdown-item" href="#">Apps</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" id="givingDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Giving</a>
-        <div class="dropdown-menu" aria-labelledby="mediaDropDownLink">
-          <a class="dropdown-item" href="#">Give Online</a>
-          <a class="dropdown-item" href="#">Legacy Team</a>
-          <a class="dropdown-item" href="#">Legacy Offering</a>
-          <a class="dropdown-item" href="#">Text to Give</a>
-        </div>
-      </li>
-      <%= if (current_user) { %>
-        <h1><%= current_user.Email %></h1>
-        <a href="/logout" data-method="DELETE">Sign Out</a>
-      <% } else { %>
+      <nav class="nav navbar-expand-lg navbar-light" style="padding: 0 2em;">
+         <a class="navbar-brand rounded" style="padding: 0.5em; background: #4786A5;" href="/"><image src='<%= assetPath("images/logo.png") %>' alt="Highlands Dream Team Benchmarks" /></a>
+         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-extention" aria-controls="navbar-extention" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+         </button>
 
-        <a href="/login" class="btn btn-light">Sign In</a>
+         <div class="collapse navbar-collapse" id="navbar-extention">
+             <ul class="navbar-nav mr-auto">
 
-        <a href="/users/new" class="btn btn-outline-secondary">Register</a>
-      <% } %>
-      </nav>
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="aboutDropDownLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+              <div class="dropdown-menu" aria-labelledby="aboutDropDownLink">
+                <a class="dropdown-item" href="#">Our Pastor</a>
+                <a class="dropdown-item" href="#">Our Story</a>
+                <a class="dropdown-item" href="#">Our Purpose</a>
+                <a class="dropdown-item" href="#">Our Team</a>
+                <a class="dropdown-item" href="#">Our Leadership</a>
+                <a class="dropdown-item" href="#">Statement of Faith</a>
+                <a class="dropdown-item" href="#">Common Questions</a>
+                <a class="dropdown-item" href="#">Highland Cafe</a>
+                <a class="dropdown-item" href="#">Contact Us</a>
+              </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="teamsDropdownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Teams</a>
+                <div class="dropdown-menu" aria-labelledby="teamsDropDownLink">
+                    <%= for (t) in teams { %>
+                      <a class="dropdown-item" href="/pages/<%= t.PageSlug %>"><%= t.Name %></a>
+                    <% } %>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="campusesDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Campuses</a>
+                <div class="dropdown-menu" aria-labelledby="campusesDropDownLink">
+                    <%= for (c) in campuses { %>
+                      <a class="dropdown-item" href="#"><%= c.Name %></a>
+                    <% } %>
+                  </div>
+              </li>
+              <%= if (isLoggedIn() && isCurrentUserSuperAdmin()) { %>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="adminDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Admin</a>
+                <div class="dropdown-menu" aria-labelledby="adminDropDownLink">
+                  <a class="dropdown-item" href="/pages">Pages</a>
+                  <a class="dropdown-item" href="/users">Users</a>
+                  <a class="dropdown-item" href="/resources">Resources</a>
+                  <a class="dropdown-item" href="/teams">Teams</a>
+                </div>
+              </li>
+              <% } %>
+                          </ul>
+              <%= if (current_user) { %>
+                  <p class="navbar-text" style="padding: 0.5em;" >Welcome, <%= current_user.Email %>!</p>
+                <a class="btn btn-outline-secondary navbar-btn pull-right" href="/logout" data-method="DELETE">Sign Out</a>
+              <% } else { %>
+                <a href="/login" class="btn btn-light navbar-btn btn-padded">Sign In</a>
+
+                <a href="/users/new" class="btn btn-outline-secondary navbar-btn btn-padded">Register</a>
+              <% } %>
+              </div>
+    </nav>
 
     <div class="container">
       <%= partial("flash.html") %>
