@@ -1,0 +1,6 @@
+- id: "benchmark.created.success"
+  translation: "Benchmark was successfully created."
+- id: "benchmark.updated.success"
+  translation: "Benchmark was successfully updated."
+- id: "benchmark.destroyed.success"
+  translation: "Benchmark was successfully destroyed."

@@ -1,0 +1,8 @@
+<div class="page-header">
+  <h1>Edit Benchmark</h1>
+</div>
+
+<%= form_for(benchmark, {action: benchmarkPath({ benchmark_id: benchmark.ID }), method: "PUT"}) { %>
+  <%= partial("benchmarks/form.html") %>
+  <a href="<%= benchmarkPath({ benchmark_id: benchmark.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
+<% } %>
