@@ -245,7 +245,9 @@ func SetCurrentUser(next buffalo.Handler) buffalo.Handler {
 			if err != nil {
 				return errors.WithStack(err)
 			}
+			tx.Load(u)
 			c.Set("current_user", u)
+
 		}
 		return next(c)
 	}
