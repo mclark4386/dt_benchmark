@@ -4,19 +4,19 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/gobuffalo/uuid"
 	"github.com/markbates/pop"
 	"github.com/markbates/validate"
-	"github.com/satori/go.uuid"
 )
 
 type TeamAdmin struct {
 	ID        uuid.UUID `json:"id" db:"id"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	UserId    uuid.UUID `json:"user_id" db:"user_id"` 
-	TeamId    uuid.UUID `json:"team_id" db:"team_id"` 
-	Admin     User  `belongs_to:"user"`
-	Team      Team  `belongs_to:"team"`
+	UserId    uuid.UUID `json:"user_id" db:"user_id"`
+	TeamId    uuid.UUID `json:"team_id" db:"team_id"`
+	Admin     User      `belongs_to:"user"`
+	Team      Team      `belongs_to:"team"`
 }
 
 // String is not required by pop and may be deleted

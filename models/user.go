@@ -22,6 +22,7 @@ type User struct {
 	Password             string    `json:"-" db:"-"`
 	PasswordConfirmation string    `json:"-" db:"-"`
 	IsSuperAdmin         bool      `json:"super_admin" db:"super_admin"`
+	TeamsIAdmin          Teams     `many_to_many:"team_admins"`
 }
 
 // String is not required by pop and may be deleted
