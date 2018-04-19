@@ -5,7 +5,6 @@ import (
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/uuid"
 	"github.com/pkg/errors"
 )
 
@@ -75,7 +74,7 @@ func (v BenchmarksResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new Benchmark.
 // This function is mapped to the path GET /benchmarks/new
 func (v BenchmarksResource) New(c buffalo.Context) error {
-	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 	return c.Render(200, r.Auto(c, &models.Benchmark{}))
@@ -87,7 +86,7 @@ func (v BenchmarksResource) Create(c buffalo.Context) error {
 	// Allocate an empty Benchmark
 	benchmark := &models.Benchmark{}
 
-	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 	// Bind benchmark to the html form elements
@@ -126,7 +125,7 @@ func (v BenchmarksResource) Create(c buffalo.Context) error {
 // Edit renders a edit form for a Benchmark. This function is
 // mapped to the path GET /benchmarks/{benchmark_id}/edit
 func (v BenchmarksResource) Edit(c buffalo.Context) error {
-	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
@@ -148,7 +147,7 @@ func (v BenchmarksResource) Edit(c buffalo.Context) error {
 // Update changes a Benchmark in the DB. This function is mapped to
 // the path PUT /benchmarks/{benchmark_id}
 func (v BenchmarksResource) Update(c buffalo.Context) error {
-	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
@@ -193,7 +192,7 @@ func (v BenchmarksResource) Update(c buffalo.Context) error {
 // Destroy deletes a Benchmark from the DB. This function is mapped
 // to the path DELETE /benchmarks/{benchmark_id}
 func (v BenchmarksResource) Destroy(c buffalo.Context) error {
-	if helpers.IsTeamAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("team_id")))) != nil {
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
