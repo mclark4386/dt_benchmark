@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h1>Benchmarks</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li><a href="<%= newBenchmarksPath() %>" class="btn btn-primary">Create New Benchmark</a></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Name</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (benchmark) in benchmarks { %>
+      <tr>
+      <td><%= benchmark.Name %></td>
+        <td><%= benchmark.Description %></td>
+        <td>
+          <div class="pull-right">
+            <a href="<%= benchmarkPath({ benchmark_id: benchmark.ID }) %>" class="btn btn-info">View</a>
+            <a href="<%= editBenchmarkPath({ benchmark_id: benchmark.ID }) %>" class="btn btn-warning">Edit</a>
+            <a href="<%= benchmarkPath({ benchmark_id: benchmark.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>
