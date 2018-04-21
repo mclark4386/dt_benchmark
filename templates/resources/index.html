@@ -18,9 +18,9 @@
         <td><%= resource.Url %></td>
         <td>
           <div class="pull-right">
-            <a href="<%= resourcePath({ resource_id: resource.ID }) %>" class="btn btn-info">View</a>
-            <a href="<%= editResourcePath({ resource_id: resource.ID }) %>" class="btn btn-warning">Edit</a>
-            <a href="<%= resourcePath({ resource_id: resource.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+            <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>" class="btn btn-info">View</a>
+            <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>/edit" class="btn btn-warning">Edit</a>
+            <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
           </div>
         </td>
       </tr>

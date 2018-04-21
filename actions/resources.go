@@ -55,7 +55,7 @@ func (v ResourcesResource) List(c buffalo.Context) error {
 }
 
 // Show gets the data for one Resource. This function is mapped to
-// the path GET /resources/{resource_id}
+// the path GET /resources/{s_resource_id}
 func (v ResourcesResource) Show(c buffalo.Context) error {
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
@@ -66,8 +66,8 @@ func (v ResourcesResource) Show(c buffalo.Context) error {
 	// Allocate an empty Resource
 	resource := &models.Resource{}
 
-	// To find the Resource the parameter resource_id is used.
-	if err := tx.Find(resource, c.Param("resource_id")); err != nil {
+	// To find the Resource the parameter s_resource_id is used.
+	if err := tx.Find(resource, c.Param("s_resource_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -132,7 +132,7 @@ func (v ResourcesResource) Create(c buffalo.Context) error {
 }
 
 // Edit renders a edit form for a Resource. This function is
-// mapped to the path GET /resources/{resource_id}/edit
+// mapped to the path GET /resources/{s_resource_id}/edit
 func (v ResourcesResource) Edit(c buffalo.Context) error {
 	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
 	if helpers.IsSuperAdminOrRedirect(c) != nil {
@@ -148,7 +148,7 @@ func (v ResourcesResource) Edit(c buffalo.Context) error {
 	// Allocate an empty Resource
 	resource := &models.Resource{}
 
-	if err := tx.Find(resource, c.Param("resource_id")); err != nil {
+	if err := tx.Find(resource, c.Param("s_resource_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -156,7 +156,7 @@ func (v ResourcesResource) Edit(c buffalo.Context) error {
 }
 
 // Update changes a Resource in the DB. This function is mapped to
-// the path PUT /resources/{resource_id}
+// the path PUT /resources/{s_resource_id}
 func (v ResourcesResource) Update(c buffalo.Context) error {
 	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
 	if helpers.IsSuperAdminOrRedirect(c) != nil {
@@ -172,7 +172,7 @@ func (v ResourcesResource) Update(c buffalo.Context) error {
 	// Allocate an empty Resource
 	resource := &models.Resource{}
 
-	if err := tx.Find(resource, c.Param("resource_id")); err != nil {
+	if err := tx.Find(resource, c.Param("s_resource_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -203,7 +203,7 @@ func (v ResourcesResource) Update(c buffalo.Context) error {
 }
 
 // Destroy deletes a Resource from the DB. This function is mapped
-// to the path DELETE /resources/{resource_id}
+// to the path DELETE /resources/{s_resource_id}
 func (v ResourcesResource) Destroy(c buffalo.Context) error {
 	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
 	if helpers.IsSuperAdminOrRedirect(c) != nil {
@@ -219,8 +219,8 @@ func (v ResourcesResource) Destroy(c buffalo.Context) error {
 	// Allocate an empty Resource
 	resource := &models.Resource{}
 
-	// To find the Resource the parameter resource_id is used.
-	if err := tx.Find(resource, c.Param("resource_id")); err != nil {
+	// To find the Resource the parameter s_resource_id is used.
+	if err := tx.Find(resource, c.Param("s_resource_id")); err != nil {
 		return c.Error(404, err)
 	}
 
