@@ -35,7 +35,7 @@
   branch = "master"
   name = "github.com/dustin/go-humanize"
   packages = ["."]
-  revision = "bb3d318650d48840a39aa21a027c6630e198e626"
+  revision = "02af3965c54e8cacf948b97fef38925c4120652c"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -109,8 +109,8 @@
     "fizz/translators",
     "nulls"
   ]
-  revision = "f3c6f37f77403f0a59d6666ca8529d9dd1b4281b"
-  version = "v4.5.0"
+  revision = "7e384f31116dafb43de7ff1ab5565430f9903ba0"
+  version = "v4.5.5"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -444,7 +444,7 @@
     "blowfish",
     "ssh/terminal"
   ]
-  revision = "d6449816ce06963d9d136eee5a56fca5b0616e7e"
+  revision = "e73bf333ef8920dbb52ad18d4bd38ad9d9bc76d7"
 
 [[projects]]
   branch = "master"
@@ -454,7 +454,7 @@
     "html",
     "html/atom"
   ]
-  revision = "8d16fa6dc9a85c1cd3ed24ad08ff21cf94f10888"
+  revision = "5f9ae10d9af5b1c89ae6904293b14b064d4ada23"
 
 [[projects]]
   branch = "master"
@@ -469,7 +469,7 @@
     "unix",
     "windows"
   ]
-  revision = "ecfd8b563e1320e7282dccf28ad48ec2c68aaebf"
+  revision = "79b0c6888797020a994db17c8510466c72fe75d9"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"
@@ -480,6 +480,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "2186562f2080b6908144b5ec11999a5487755d451d0a1870d043a115f78dbbd4"
+  inputs-digest = "80648ac14b2262f84c913d1ddb8d6317da37b201e0f9df6d8478bf2532c5a477"
   solver-name = "gps-cdcl"
   solver-version = 1
