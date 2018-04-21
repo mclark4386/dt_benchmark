@@ -29,9 +29,7 @@ type ResourcesResource struct {
 // List gets all Resources. This function is mapped to the path
 // GET /resources
 func (v ResourcesResource) List(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
-		return nil
-	}
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
 
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
@@ -59,10 +57,6 @@ func (v ResourcesResource) List(c buffalo.Context) error {
 // Show gets the data for one Resource. This function is mapped to
 // the path GET /resources/{resource_id}
 func (v ResourcesResource) Show(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
-		return nil
-	}
-
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -77,13 +71,16 @@ func (v ResourcesResource) Show(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
+
 	return c.Render(200, r.Auto(c, resource))
 }
 
 // New renders the form for creating a new Resource.
 // This function is mapped to the path GET /resources/new
 func (v ResourcesResource) New(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 
@@ -93,6 +90,7 @@ func (v ResourcesResource) New(c buffalo.Context) error {
 // Create adds a Resource to the DB. This function is mapped to the
 // path POST /resources
 func (v ResourcesResource) Create(c buffalo.Context) error {
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
 	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
 		return nil
 	}
@@ -136,7 +134,8 @@ func (v ResourcesResource) Create(c buffalo.Context) error {
 // Edit renders a edit form for a Resource. This function is
 // mapped to the path GET /resources/{resource_id}/edit
 func (v ResourcesResource) Edit(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 
@@ -159,7 +158,8 @@ func (v ResourcesResource) Edit(c buffalo.Context) error {
 // Update changes a Resource in the DB. This function is mapped to
 // the path PUT /resources/{resource_id}
 func (v ResourcesResource) Update(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 
@@ -205,7 +205,8 @@ func (v ResourcesResource) Update(c buffalo.Context) error {
 // Destroy deletes a Resource from the DB. This function is mapped
 // to the path DELETE /resources/{resource_id}
 func (v ResourcesResource) Destroy(c buffalo.Context) error {
-	if helpers.IsTeamOrCampusAdminBetterOrRedirect(c, uuid.Must(uuid.NewV4()), uuid.Must(uuid.NewV4())) != nil {
+	//TODO: Should this be team or campus or better? would need to be able to pass a list of teams
+	if helpers.IsSuperAdminOrRedirect(c) != nil {
 		return nil
 	}
 
