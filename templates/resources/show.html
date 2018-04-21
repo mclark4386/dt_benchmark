@@ -4,8 +4,8 @@
 
 <ul class="list-unstyled list-inline">
   <li><a href="<%= resourcesPath() %>" class="btn btn-info">Back to all Resources</a></li>
-  <li><a href="<%= editResourcePath({ resource_id: resource.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= resourcePath({ resource_id: resource.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+  <li><a href="<%= editResourcePath({ s_resource_id: resource.ID })%>" class="btn btn-warning">Edit</a></li>
+  <li><a href="<%= resourcePath({ s_resource_id: resource.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
 
 <p>

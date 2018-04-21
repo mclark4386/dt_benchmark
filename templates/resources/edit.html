@@ -2,7 +2,7 @@
   <h1>Edit Resource</h1>
 </div>
 
-<%= form_for(resource, {action: resourcePath({ resource_id: resource.ID }), method: "PUT"}) { %>
+<%= form_for(resource, {action: resourcePath({ s_resource_id: resource.ID }), method: "PUT"}) { %>
   <%= partial("resources/form.html") %>
   <a href="<%= resourcePath({ resource_id: resource.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
