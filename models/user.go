@@ -31,14 +31,31 @@ func (u User) String() string {
 	return string(ju)
 }
 
-func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
-	u.Email = strings.ToLower(u.Email)
-	ph, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return validate.NewErrors(), errors.WithStack(err)
+func (u *User) PrepFields() (*validate.Errors, error) {
+	if len(strings.TrimSpace(u.Email)) > 0 {
+		u.Email = strings.ToLower(u.Email)
 	}
+	if len(strings.TrimSpace(u.Password)) > 0 {
+		ph, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return validate.NewErrors(), errors.WithStack(err)
+		}
+		u.PasswordHash = string(ph)
+	}
+	return nil, nil
+}
 
-	u.PasswordHash = string(ph)
+func (u *User) Update(tx *pop.Connection) (*validate.Errors, error) {
+	if verrs, err := u.PrepFields(); (verrs != nil && verrs.HasAny()) || err != nil {
+		return verrs, err
+	}
+	return tx.ValidateAndSave(u)
+}
+
+func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
+	if verrs, err := u.PrepFields(); (verrs != nil && verrs.HasAny()) || err != nil {
+		return verrs, err
+	}
 	return tx.ValidateAndCreate(u)
 }
 

@@ -173,7 +173,7 @@ func (v UsersResource) Update(c buffalo.Context) error {
 		return errors.WithStack(err)
 	}
 
-	verrs, err := tx.ValidateAndUpdate(user)
+	verrs, err := user.Update(tx)
 	if err != nil {
 		return errors.WithStack(err)
 	}
