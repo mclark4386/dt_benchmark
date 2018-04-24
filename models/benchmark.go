@@ -11,11 +11,12 @@ import (
 )
 
 type Benchmark struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
-	Name        string    `json:"name" db:"name"`
-	Description string    `json:"description" db:"description"`
+	ID             uuid.UUID      `json:"id" db:"id"`
+	CreatedAt      time.Time      `json:"created_at" db:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at" db:"updated_at"`
+	Name           string         `json:"name" db:"name"`
+	Description    string         `json:"description" db:"description"`
+	BenchmarkItems BenchmarkItems `has_many:"benchmark_items"`
 }
 
 // String is not required by pop and may be deleted

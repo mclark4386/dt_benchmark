@@ -16,6 +16,7 @@ type BenchmarkItem struct {
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
 	Name        string    `json:"name" db:"name"`
 	BenchmarkID uuid.UUID `json:"benchmark_id" db:"benchmark_id"`
+	Benchmark   Benchmark `belongs_to:"benchmark"`
 }
 
 // String is not required by pop and may be deleted
