@@ -10,47 +10,46 @@ import (
 	"github.com/gobuffalo/validate/validators"
 )
 
-type Benchmark struct {
-	ID             uuid.UUID      `json:"id" db:"id"`
-	CreatedAt      time.Time      `json:"created_at" db:"created_at"`
-	UpdatedAt      time.Time      `json:"updated_at" db:"updated_at"`
-	Name           string         `json:"name" db:"name"`
-	Description    string         `json:"description" db:"description"`
-	BenchmarkItems BenchmarkItems `has_many:"benchmark_items"`
+type BenchmarkItem struct {
+	ID          uuid.UUID `json:"id" db:"id"`
+	CreatedAt   time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
+	Name        string    `json:"name" db:"name"`
+	BenchmarkID uuid.UUID `json:"benchmark_id" db:"benchmark_id"`
+	Benchmark   Benchmark `belongs_to:"benchmark"`
 }
 
 // String is not required by pop and may be deleted
-func (b Benchmark) String() string {
+func (b BenchmarkItem) String() string {
 	jb, _ := json.Marshal(b)
 	return string(jb)
 }
 
-// Benchmarks is not required by pop and may be deleted
-type Benchmarks []Benchmark
+// BenchmarkItems is not required by pop and may be deleted
+type BenchmarkItems []BenchmarkItem
 
 // String is not required by pop and may be deleted
-func (b Benchmarks) String() string {
+func (b BenchmarkItems) String() string {
 	jb, _ := json.Marshal(b)
 	return string(jb)
 }
 
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
 // This method is not required and may be deleted.
-func (b *Benchmark) Validate(tx *pop.Connection) (*validate.Errors, error) {
+func (b *BenchmarkItem) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: b.Name, Name: "Name"},
-		&validators.StringIsPresent{Field: b.Description, Name: "Description"},
 	), nil
 }
 
 // ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
 // This method is not required and may be deleted.
-func (b *Benchmark) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
+func (b *BenchmarkItem) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
 
 // ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
 // This method is not required and may be deleted.
-func (b *Benchmark) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
+func (b *BenchmarkItem) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
