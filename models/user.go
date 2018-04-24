@@ -42,7 +42,7 @@ func (u *User) PrepFields() (*validate.Errors, error) {
 		}
 		u.PasswordHash = string(ph)
 	}
-	return nil, nil
+	return validate.NewErrors(), nil
 }
 
 func (u *User) Update(tx *pop.Connection) (*validate.Errors, error) {
