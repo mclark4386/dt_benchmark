@@ -1,0 +1,6 @@
+- id: "benchmark_item.created.success"
+  translation: "BenchmarkItem was successfully created."
+- id: "benchmark_item.updated.success"
+  translation: "BenchmarkItem was successfully updated."
+- id: "benchmark_item.destroyed.success"
+  translation: "BenchmarkItem was successfully destroyed."
