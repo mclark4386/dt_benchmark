@@ -1,0 +1,6 @@
+- id: "campus.created.success"
+  translation: "Campus was successfully created."
+- id: "campus.updated.success"
+  translation: "Campus was successfully updated."
+- id: "campus.destroyed.success"
+  translation: "Campus was successfully destroyed."

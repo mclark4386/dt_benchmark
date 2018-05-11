@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h1>Campus</h1>
+</div>
+<ul class="list-unstyled list-inline">
+  <li><a href="<%= newCampusesPath() %>" class="btn btn-primary">Create New Campus</a></li>
+</ul>
+
+<table class="table table-striped">
+  <thead>
+  <th>Name</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (campus) in campuses { %>
+      <tr>
+      <td><%= campus.Name %></td>
+        <td>
+          <div class="pull-right">
+            <a href="<%= campusPath({ campus_id: campus.ID }) %>" class="btn btn-info">View</a>
+            <a href="<%= editCampusPath({ campus_id: campus.ID }) %>" class="btn btn-warning">Edit</a>
+            <a href="<%= campusPath({ campus_id: campus.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>
