@@ -70,6 +70,7 @@ func App() *buffalo.App {
 		app.Resource("/resources", ResourcesResource{})
 		app.Resource("/benchmarks", BenchmarksResource{})
 		app.Resource("/benchmark_items", BenchmarkItemsResource{})
+		app.Resource("/campuses", CampusesResource{})
 	}
 
 	return app
