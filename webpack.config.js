@@ -8,14 +8,14 @@ var CleanWebpackPlugin = require("clean-webpack-plugin");
 
 var entries = {
   application: [
-    './node_modules/jquery-ujs/src/rails.js',
+    'babel-polyfill',
     './assets/css/application.scss',
   ],
 }
 
-glob.sync("./assets/*/*.*").reduce((_, entry) => {
-  let key = entry.replace(/(\.\/assets\/(js|css|go)\/)|\.(js|s[ac]ss|go)/g, '')
-  if(key.startsWith("_") || (/(js|s[ac]ss|go)$/i).test(entry) == false) {
+glob.sync("./assets/**/*.*").reduce((_, entry) => {
+  let key = entry.replace(/(\.\/assets\/(js|css|go)\/)|\.(jsx?|s[ac]ss|go)/g, '')
+  if(key.startsWith("_") || (/(jsx?|s[ac]ss|go)$/i).test(entry) == false) {
     return
   }
   
@@ -27,7 +27,13 @@ glob.sync("./assets/*/*.*").reduce((_, entry) => {
   entries[key].push(entry)
 })
 
+var mode = 'development';
+if (PROD != "development") {
+    mode = 'production';
+}
+
 module.exports = {
+  mode: mode,
   entry: entries,
   output: {
     filename: "[name].[hash].js",
@@ -38,10 +44,6 @@ module.exports = {
       "public/assets"
     ], {
       verbose: false,
-    }),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
     }),
     new ExtractTextPlugin("[name].[hash].css"),
     new CopyWebpackPlugin(
@@ -64,8 +66,15 @@ module.exports = {
   module: {
     rules: [{
       test: /\.jsx?$/,
-      loader: "babel-loader",
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      use: [
+          {
+              loader: 'babel-loader',
+              options: {
+                  presets: ['react']
+              }
+          }
+      ],
     },
       {
         test: /\.s[ac]ss$/,
@@ -88,10 +97,6 @@ module.exports = {
       },
       { test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,use: "url-loader"},
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,use: "file-loader" },
-      {
-        test: require.resolve("jquery"),
-        use: "expose-loader?jQuery!expose-loader?$"
-      },
       {
         test: /\.go$/,
         use: "gopherjs-loader"
