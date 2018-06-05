@@ -11,12 +11,13 @@ import (
 )
 
 type Resource struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	Title     string    `json:"title" db:"title"`
-	Url       string    `json:"url" db:"url"`
-	Teams     Teams     `many_to_many:"team_resources"`
+	ID            uuid.UUID     `json:"id" db:"id"`
+	CreatedAt     time.Time     `json:"created_at" db:"created_at"`
+	UpdatedAt     time.Time     `json:"updated_at" db:"updated_at"`
+	Title         string        `json:"title" db:"title"`
+	Url           string        `json:"url" db:"url"`
+	Teams         Teams         `many_to_many:"team_resources"`
+	BenchmarkItem BenchmarkItem `many_to_many:"benchmark_item_resources"`
 }
 
 // String is not required by pop and may be deleted

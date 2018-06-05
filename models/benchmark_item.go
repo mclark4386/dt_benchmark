@@ -17,6 +17,7 @@ type BenchmarkItem struct {
 	Name        string    `json:"name" db:"name"`
 	BenchmarkID uuid.UUID `json:"benchmark_id" db:"benchmark_id"`
 	Benchmark   Benchmark `belongs_to:"benchmark"`
+	Resources   Resources `many_to_many:"benchmark_item_resources"`
 }
 
 // String is not required by pop and may be deleted
