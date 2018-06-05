@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <meta charset="utf-8">
     <title>Dream Team Training</title>
     <%= stylesheetTag("application.css") %>
@@ -8,6 +9,10 @@
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
     <link rel="icon" href="<%= assetPath("images/favicon.png") %>">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" integrity="sha256-xJOZHfpxLR/uhh1BwYFS5fhmOAdIRQaiOul5F/b7v3s=" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" integrity="sha256-FA14tBI8v+/1BtcH9XtJpcNbComBEpdawUZA6BPXRVw=" crossorigin="anonymous"></script>
     <%= contentOf("extraStyle") %>
@@ -59,11 +64,12 @@
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" id="adminDropDownLink" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Admin</a>
                 <div class="dropdown-menu" aria-labelledby="adminDropDownLink">
-                    <a class="dropdown-item" href="/benchmarks">Benchmarks</a>
+                  <a class="dropdown-item" href="/benchmarks">Benchmarks</a>
+                  <a class="dropdown-item" href="/campuses">Campuses</a>
                   <a class="dropdown-item" href="/pages">Pages</a>
-                  <a class="dropdown-item" href="/users">Users</a>
                   <a class="dropdown-item" href="/resources">Resources</a>
                   <a class="dropdown-item" href="/teams">Teams</a>
+                  <a class="dropdown-item" href="/users">Users</a>
                 </div>
               </li>
               <% } %>
