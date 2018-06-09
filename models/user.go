@@ -18,6 +18,9 @@ type User struct {
 	CreatedAt            time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt            time.Time `json:"updated_at" db:"updated_at"`
 	Email                string    `json:"email" db:"email"`
+	FirstName            string    `json:"first_name" db:"first_name"`
+	LastName             string    `json:"last_name" db:"last_name"`
+	Name                 string    `json:"name" db:"name" select:"(users.first_name||' '||users.last_name) as name" rw:"r"`
 	PasswordHash         string    `json:"-" db:"password_hash"`
 	Password             string    `json:"-" db:"-"`
 	PasswordConfirmation string    `json:"-" db:"-"`
