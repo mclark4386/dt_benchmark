@@ -31,7 +31,6 @@ sast:
   artifacts:
     paths: [gl-sast-report.json]
 
-
 build:test:
   image: gobuffalo/buffalo:latest
   <<: *test-vars
