@@ -1,6 +1,8 @@
 package actions
 
 import (
+	"fmt"
+
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
@@ -64,7 +66,7 @@ func (v BenchmarkItemsResource) Show(c buffalo.Context) error {
 	benchmarkItem := &models.BenchmarkItem{}
 
 	// To find the BenchmarkItem the parameter benchmark_item_id is used.
-	if err := tx.Find(benchmarkItem, c.Param("benchmark_item_id")); err != nil {
+	if err := tx.Eager().Find(benchmarkItem, c.Param("benchmark_item_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -139,7 +141,26 @@ func (v BenchmarkItemsResource) Edit(c buffalo.Context) error {
 
 	if err := tx.Find(benchmarkItem, c.Param("benchmark_item_id")); err != nil {
 		return c.Error(404, err)
+	} else {
+		err = tx.Load(benchmarkItem)
+		if err != nil {
+			return c.Error(404, err)
+		}
 	}
+
+	resources := models.Resources{}
+
+	if err := tx.All(&resources); err != nil {
+		fmt.Printf("ERROR pulling resources: %v\n", err)
+	}
+
+	c.Set("resources", resources)
+
+	bi_resources := []string{}
+	for _, resource := range benchmarkItem.Resources {
+		bi_resources = append(bi_resources, resource.ID.String())
+	}
+	c.Set("bi_resources", bi_resources)
 
 	return c.Render(200, r.Auto(c, benchmarkItem))
 }
@@ -156,6 +177,16 @@ func (v BenchmarkItemsResource) Update(c buffalo.Context) error {
 		return errors.WithStack(errors.New("no transaction found"))
 	}
 
+	type UpdateElements struct {
+		Resources []string `json:"resources"`
+	}
+
+	elements := UpdateElements{}
+
+	if err := c.Bind(&elements); err != nil {
+		return errors.WithStack(err)
+	}
+
 	// Allocate an empty BenchmarkItem
 	benchmarkItem := &models.BenchmarkItem{}
 
@@ -167,6 +198,10 @@ func (v BenchmarkItemsResource) Update(c buffalo.Context) error {
 	if err := c.Bind(benchmarkItem); err != nil {
 		return errors.WithStack(err)
 	}
+
+	fmt.Printf("================\nupdate elements: %v\n", elements)
+
+	benchmarkItem.UpdateResources(tx, elements.Resources)
 
 	verrs, err := tx.ValidateAndUpdate(benchmarkItem)
 	if err != nil {

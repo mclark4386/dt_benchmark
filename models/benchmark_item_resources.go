@@ -10,13 +10,11 @@ import (
 )
 
 type BenchmarkItemResource struct {
-	ID              uuid.UUID     `json:"id" db:"id"`
-	CreatedAt       time.Time     `json:"created_at" db:"created_at"`
-	UpdatedAt       time.Time     `json:"updated_at" db:"updated_at"`
-	BenchmarkItemID uuid.UUID     `json:"benchmark_item_id" db:"benchmark_item_id"`
-	BenchmarkItem   BenchmarkItem `belongs_to: "benchmark_item`
-	ResourceID      uuid.UUID     `json:"resource_id" db:"resource_id"`
-	Resource        Resource      `belongs_to: "resource"`
+	ID              uuid.UUID `json:"id" db:"id"`
+	CreatedAt       time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt       time.Time `json:"updated_at" db:"updated_at"`
+	BenchmarkItemID uuid.UUID `json:"benchmark_item_id" db:"benchmark_item_id"`
+	ResourceID      uuid.UUID `json:"resource_id" db:"resource_id"`
 }
 
 // String is not required by pop and may be deleted

@@ -3,6 +3,17 @@
 </div>
 
 <%= form_for(benchmarkItem, {action: benchmarkItemPath({ benchmark_item_id: benchmarkItem.ID }), method: "PUT"}) { %>
+  <div class="form-group">
+    <label for="benchmarkItem-Resources">Resources</label>
+    <div>
+        <select multiple="multiple" class="form-control simple-select2" id="benchmarkItem-Resources" name="Resources">
+        <%= for (resource) in resources { %>
+            <option value="<%= resource.ID %>" <%= if (arrayContains(bi_resources, resource.ID.String())) { %> selected="selected" <% } %>><%= resource.Title %></option>
+            <% } %>
+            </select>
+            </div>
+            </div>
+
   <%= partial("benchmark_items/form.html") %>
   <a href="<%= benchmarkItemPath({ benchmark_item_id: benchmarkItem.ID }) %>" class="btn btn-warning" data-confirm="Are you sure?">Cancel</a>
 <% } %>
