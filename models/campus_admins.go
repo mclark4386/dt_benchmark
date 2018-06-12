@@ -15,6 +15,8 @@ type CampusAdmin struct {
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 	UserID    uuid.UUID `json:"user_id" db:"user_id"`
 	CampusID  uuid.UUID `json:"campus_id" db:"campus_id"`
+	Admin     User      `belongs_to:"user"`
+	Campus    Campus    `belongs_to:"campus"`
 }
 
 // String is not required by pop and may be deleted
