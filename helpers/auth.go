@@ -22,6 +22,17 @@ func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
 	return user.IsSuperAdmin || isTeamAdmin
 }
 
+func IsCampusAdminOrBetter(user *models.User, campus_id uuid.UUID) bool {
+	isCampusAdmin := false
+	for _, campus := range user.IsCampusAdmin {
+		if campus.ID == campus_id {
+			isCampusAdmin = true
+			break
+		}
+	}
+	return user.IsSuperAdmin || isCampusAdmin
+}
+
 // Template Helpers
 func GetCurrentUserInTemplate(c plush.HelperContext) *models.User {
 	return c.Value("current_user").(*models.User)
