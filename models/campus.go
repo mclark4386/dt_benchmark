@@ -15,7 +15,7 @@ type Campus struct {
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 	Name      string    `json:"name" db:"name"`
-	Admins    Users     `has_many:"campus_admins"`
+	Admins    Users     `many_to_many:"campus_admins"`
 }
 
 // String is not required by pop and may be deleted
