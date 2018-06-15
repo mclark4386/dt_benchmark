@@ -24,7 +24,7 @@ func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
 
 func IsCampusAdminOrBetter(user *models.User, campus_id uuid.UUID) bool {
 	isCampusAdmin := false
-	for _, campus := range user.IsCampusAdmin {
+	for _, campus := range user.CampusesIAdmin {
 		if campus.ID == campus_id {
 			isCampusAdmin = true
 			break
