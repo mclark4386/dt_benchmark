@@ -141,6 +141,12 @@ func (v CampusesResource) Edit(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
+	campus_admins := []string{}
+	for _, admin := range campus.Admins {
+		campus_admins = append(campus_admins, admin.ID.String())
+	}
+	c.Set("campus_admins", campus_admins)
+
 	return c.Render(200, r.Auto(c, campus))
 }
 
