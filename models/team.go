@@ -126,7 +126,7 @@ func (t *Team) UpdateResources(tx *pop.Connection, resources []string) {
 	}
 }
 
-//Should remove excess and add new admins
+// UpdateAdmins Should remove excess and add new admins
 func (t *Team) UpdateAdmins(tx *pop.Connection, admins []string) {
 	//Remove existing that have been removed from the list
 	args := []interface{}{t.ID}

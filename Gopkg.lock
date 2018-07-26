@@ -82,6 +82,15 @@
   version = "v1.6.2"
 
 [[projects]]
+  name = "github.com/gobuffalo/fizz"
+  packages = [
+    ".",
+    "translators"
+  ]
+  revision = "a68affc47dc7145d791149e996c379a0f46ee507"
+  version = "v1.0.2"
+
+[[projects]]
   name = "github.com/gobuffalo/makr"
   packages = ["."]
   revision = "2f752af1831478b8c496635cb46b947811097061"
@@ -102,8 +111,8 @@
     "parser",
     "token"
   ]
-  revision = "5d52aed81c89f76ec6f19a03537c85773102ebf4"
-  version = "v3.7.3"
+  revision = "726a3d7f08d2665e95e495175ddb68da00868572"
+  version = "v3.7.9"
 
 [[projects]]
   name = "github.com/gobuffalo/pop"
@@ -111,12 +120,11 @@
     ".",
     "associations",
     "columns",
-    "fizz",
-    "fizz/translators",
+    "fix",
     "nulls"
   ]
-  revision = "9985012f32f5e36b1a10e9191ee460daac4a9bc7"
-  version = "v4.5.9"
+  revision = "9936c00d4230dae87d8ac5cf73149d9de7b0e899"
+  version = "v4.6.1"
 
 [[projects]]
   name = "github.com/gobuffalo/suite"
@@ -124,8 +132,8 @@
     ".",
     "fix"
   ]
-  revision = "e2e0134eb87394466461f262c7cb7027b9e332e0"
-  version = "v2.1.1"
+  revision = "e731d05da4535a4a3bd8f22fb7cd231d555e0a41"
+  version = "v2.1.2"
 
 [[projects]]
   name = "github.com/gobuffalo/tags"
@@ -235,10 +243,10 @@
   revision = "800e180dcd16937a4cc134c6aa8c8407e62ce880"
 
 [[projects]]
-  branch = "master"
   name = "github.com/markbates/inflect"
   packages = ["."]
   revision = "dd7de90c06bca70f18136e59dec2270c19a401e7"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/markbates/refresh"
@@ -260,17 +268,6 @@
   name = "github.com/markbates/willie"
   packages = ["."]
   revision = "67934945178ed6f7799c3a001e2dde57315558c2"
-
-[[projects]]
-  name = "github.com/mattn/anko"
-  packages = [
-    "ast",
-    "core",
-    "parser",
-    "vm"
-  ]
-  revision = "e9c5c0ca86cf129292c56ddbddc4fff027844d65"
-  version = "v0.0.4"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
