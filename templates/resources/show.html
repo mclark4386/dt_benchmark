@@ -2,11 +2,11 @@
   <h1>Resource#Show</h1>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= resourcesPath() %>" class="btn btn-info">Back to all Resources</a></li>
-  <li><a href="<%= editResourcePath({ s_resource_id: resource.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= resourcePath({ s_resource_id: resource.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-</ul>
+<div class="btn-group" role="group" >
+  <a href="<%= resourcesPath() %>" class="btn btn-info">Back to all Resources</a>
+  <a href="<%= editResourcePath({ s_resource_id: resource.ID })%>" class="btn btn-warning">Edit</a>
+  <a href="<%= resourcePath({ s_resource_id: resource.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</div>
 
 <p>
   <strong>Title</strong>: <%= resource.Title %>

@@ -15,7 +15,7 @@
       <tr>
       <td><%= campus.Name %></td>
         <td>
-          <div class="pull-right">
+          <div class="btn-group pull-right" role="group" >
             <a href="<%= campusPath({ campus_id: campus.ID }) %>" class="btn btn-info">View</a>
             <a href="<%= editCampusPath({ campus_id: campus.ID }) %>" class="btn btn-warning">Edit</a>
             <a href="<%= campusPath({ campus_id: campus.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>

@@ -17,7 +17,7 @@
       <td><%= resource.Title %></td>
         <td><%= resource.Url %></td>
         <td>
-          <div class="pull-right">
+            <div class="btn-group pull-right" role="group" >
             <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>" class="btn btn-info">View</a>
             <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>/edit" class="btn btn-warning">Edit</a>
             <a href="<%= resourcePath({ s_resource_id: resource.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
