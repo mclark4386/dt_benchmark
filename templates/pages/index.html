@@ -18,7 +18,7 @@
       <td><%= page.Title %></td>
         <td><%= page.Slug %></td>
         <td>
-          <div class="pull-right">
+          <div class="btn-group pull-right" role="group" >
             <a href="<%= pagePath({ page_id: page.ID }) %>" class="btn btn-info">View</a>
             <a href="<%= editPagePath({ page_id: page.ID }) %>" class="btn btn-warning">Edit</a>
             <a href="<%= pagePath({ page_id: page.ID }) %>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
