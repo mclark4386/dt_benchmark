@@ -71,7 +71,7 @@ func (v TeamsResource) Show(c buffalo.Context) error {
 	team := &models.Team{}
 
 	// To find the Team the parameter team_id is used.
-	if err := tx.Find(team, c.Param("team_id")); err != nil {
+	if err := tx.Eager().Find(team, c.Param("team_id")); err != nil {
 		return c.Error(404, err)
 	}
 

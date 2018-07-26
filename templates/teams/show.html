@@ -1,14 +1,14 @@
 <div class="page-header">
-  <h1>Team#Show</h1>
+  <h1>Team: <%= team.Name %></h1>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= teamsPath() %>" class="btn btn-info">Back to all Teams</a></li>
+<div class="btn-group" role="group" >
+  <a href="<%= teamsPath() %>" class="btn btn-info">Back to all Teams</a>
   <%= if(isCurrentUserTeamOrSuperAdmin(team.ID)) {%>
-    <li><a href="<%= editTeamPath({ team_id: team.ID })%>" class="btn btn-warning">Edit</a></li>
-    <li><a href="<%= teamPath({ team_id: team.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+    <a href="<%= editTeamPath({ team_id: team.ID })%>" class="btn btn-warning">Edit</a>
+    <a href="<%= teamPath({ team_id: team.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
   <% } %>
-</ul>
+</div>
 
 <p>
   <strong>Name</strong>: <%= team.Name %>
@@ -21,32 +21,48 @@
 </p>
 
 <div class="container-fluid">
-    <%= if (len(team.Resources) > 0) {%>
-    <div class="col-md-3">
-<div class="card">
-    <div class="card-header">
-       <h3>Resources</h3>
+    <div class="row">
+        <%= if (len(team.Positions) > 0) {%>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Positions</h3>
+                </div>
+                    <ul class="list-group list-group-flush list-unstyled">
+                        <%= for (position) in team.Positions { %>
+                        <li class="list-group-item"><a href="<%= teamPositionPath({team_position_id: position.ID}) %>"><%= position.Name %></a> </li>
+                        <% } %>
+                    </ul>
+            </div>
+        </div>
+        <% } %>
+        <%= if (len(team.Resources) > 0) {%>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                <h3>Resources</h3>
+                </div>
+                    <ul class="list-group list-group-flush list-unstyled">
+                        <%= for (resource) in team.Resources { %>
+                            <li class="list-group-item"><a href="<%= resource.Url %>"><%= resource.Title %> </a></li>
+                        <% } %>
+                    </ul>
+            </div>
+        </div>
+        <% } %>
+        <%= if (len(team.Admins) > 0) {%>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Admins</h3>
+                </div>
+                    <ul class="list-group list-group-flush list-unstyled">
+                        <%= for (admin) in team.Admins { %>
+                        <li class="list-group-item"><%= admin.Email %> </li>
+                        <% } %>
+                    </ul>
+            </div>
+        </div>
+        <% } %>
     </div>
-        <ul class="list-group list-group-flush list-unstyled">
-            <%= for (resource) in team.Resources { %>
-                <li class="list-group-item"><a href="<%= resource.Url %>"><%= resource.Title %> </a></li>
-            <% } %>
-        </ul>
-</div>
-</div>
-<% } %>
-<%= if (len(team.Admins) > 0) {%>
-<div class="col-md-3">
-<div class="card">
-    <div class="card-header">
-        <h3>Admins</h3>
-    </div>
-        <ul class="list-group list-group-flush list-unstyled">
-            <%= for (admin) in team.Admins { %>
-            <li class="list-group-item"><%= admin.Email %> </li>
-            <% } %>
-        </ul>
-</div>
-</div>
-<% } %>
 </div>

@@ -7,10 +7,13 @@ import (
 	"github.com/gobuffalo/uuid"
 )
 
+// IsSuperAdmin will return if the user is a super admin or not
 func IsSuperAdmin(user *models.User) bool {
 	return user.IsSuperAdmin
 }
 
+// IsTeamAdminOrBetter will return if the user is a super admin or
+// the admin for a specific team or not
 func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
 	isTeamAdmin := false
 	for _, team := range user.TeamsIAdmin {
@@ -20,6 +23,12 @@ func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
 		}
 	}
 	return user.IsSuperAdmin || isTeamAdmin
+}
+
+// IsAnyTeamAdminOrBetter will return if the user is a super admin or
+// the admin for any team or not
+func IsAnyTeamAdminOrBetter(user *models.User) bool {
+	return user.IsSuperAdmin || len(user.TeamsIAdmin) > 0
 }
 
 // Template Helpers
@@ -37,6 +46,10 @@ func IsCurrentUserSuperAdmin(c plush.HelperContext) bool {
 
 func IsCurrentUserTeamOrSuperAdmin(team_id uuid.UUID, c plush.HelperContext) bool {
 	return IsTeamAdminOrBetter(GetCurrentUserInTemplate(c), team_id)
+}
+
+func IsCurrentUserAnyTeamOrSuperAdmin(c plush.HelperContext) bool {
+	return IsAnyTeamAdminOrBetter(GetCurrentUserInTemplate(c))
 }
 
 // Action Helpers
@@ -58,6 +71,16 @@ func IsSuperAdminOrRedirect(c buffalo.Context) error {
 func IsTeamAdminBetterOrRedirect(c buffalo.Context, team_id uuid.UUID) error {
 	user := GetCurrentUser(c)
 	if IsTeamAdminOrBetter(user, team_id) {
+		return nil
+	} else {
+		c.Flash().Add("danger", "You don't have permissions for that!")
+		return c.Redirect(302, "/")
+	}
+}
+
+func IsAnyTeamAdminBetterOrRedirect(c buffalo.Context) error {
+	user := GetCurrentUser(c)
+	if IsAnyTeamAdminOrBetter(user) {
 		return nil
 	} else {
 		c.Flash().Add("danger", "You don't have permissions for that!")
