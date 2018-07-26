@@ -1,13 +1,11 @@
 <div class="page-header">
-  <h1>Campus#Show</h1>
+  <h1><%= campus.Name %></h1>
 </div>
 
+<%= if (isLoggedIn() && isCurrentUserSuperAdmin()) { %>
 <ul class="list-unstyled list-inline">
   <li><a href="<%= campusesPath() %>" class="btn btn-info">Back to all Campus</a></li>
   <li><a href="<%= editCampusPath({ campus_id: campus.ID })%>" class="btn btn-warning">Edit</a></li>
   <li><a href="<%= campusPath({ campus_id: campus.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
 </ul>
-
-<p>
-  <strong>Name</strong>: <%= campus.Name %>
-</p>
+<% } %>
