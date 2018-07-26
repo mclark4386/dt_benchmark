@@ -39,6 +39,7 @@ func (t TeamPositions) String() string {
 func (t *TeamPosition) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: t.Name, Name: "Name"},
+		&validators.UUIDIsPresent{Field: t.TeamID, Name: "Team"},
 	), nil
 }
 
