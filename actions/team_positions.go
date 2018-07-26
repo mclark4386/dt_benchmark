@@ -1,6 +1,7 @@
 package actions
 
 import (
+	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
@@ -73,7 +74,10 @@ func (v TeamPositionsResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new TeamPosition.
 // This function is mapped to the path GET /team_positions/new
 func (v TeamPositionsResource) New(c buffalo.Context) error {
-	SetupForms(c)
+	if helpers.IsAnyTeamAdminBetterOrRedirect(c) != nil {
+		return nil
+	}
+	v.SetupForms(c)
 	return c.Render(200, r.Auto(c, &models.TeamPosition{}))
 }
 
@@ -86,6 +90,12 @@ func (v TeamPositionsResource) Create(c buffalo.Context) error {
 	// Bind teamPosition to the html form elements
 	if err := c.Bind(teamPosition); err != nil {
 		return errors.WithStack(err)
+	}
+
+	// Make sure the current_user is either a super admin or a team admin for the team
+	// we are trying to add this position to.
+	if helpers.IsTeamAdminBetterOrRedirect(c, teamPosition.TeamID) != nil {
+		return nil
 	}
 
 	// Get the DB connection from the context
@@ -132,7 +142,13 @@ func (v TeamPositionsResource) Edit(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
-	SetupForms(c)
+	// Make sure the current_user is either a super admin or a team admin for the team
+	// we are part of.
+	if helpers.IsTeamAdminBetterOrRedirect(c, teamPosition.TeamID) != nil {
+		return nil
+	}
+
+	v.SetupForms(c)
 	return c.Render(200, r.Auto(c, teamPosition))
 }
 
@@ -150,6 +166,12 @@ func (v TeamPositionsResource) Update(c buffalo.Context) error {
 
 	if err := tx.Find(teamPosition, c.Param("team_position_id")); err != nil {
 		return c.Error(404, err)
+	}
+
+	// Make sure the current_user is either a super admin or a team admin for the team
+	// we are part of.
+	if helpers.IsTeamAdminBetterOrRedirect(c, teamPosition.TeamID) != nil {
+		return nil
 	}
 
 	// Bind TeamPosition to the html form elements
@@ -195,6 +217,12 @@ func (v TeamPositionsResource) Destroy(c buffalo.Context) error {
 		return c.Error(404, err)
 	}
 
+	// Make sure the current_user is either a super admin or a team admin for the team
+	// we are part of.
+	if helpers.IsTeamAdminBetterOrRedirect(c, teamPosition.TeamID) != nil {
+		return nil
+	}
+
 	if err := tx.Destroy(teamPosition); err != nil {
 		return errors.WithStack(err)
 	}
@@ -206,7 +234,7 @@ func (v TeamPositionsResource) Destroy(c buffalo.Context) error {
 	return c.Render(200, r.Auto(c, teamPosition))
 }
 
-func SetupForms(c buffalo.Context) {
+func (v TeamPositionsResource) SetupForms(c buffalo.Context) {
 	teams := models.Teams{}
 
 	// Get the DB connection from the context
