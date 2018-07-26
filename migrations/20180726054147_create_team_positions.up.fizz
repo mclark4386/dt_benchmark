@@ -1,0 +1,5 @@
+create_table("team_positions", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("name", "string", {})
+	t.Column("team_id", "uuid", {})
+})

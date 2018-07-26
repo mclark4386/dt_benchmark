@@ -73,6 +73,7 @@ func App() *buffalo.App {
 		camp := &CampusesResource{}
 		app.Middleware.Skip(Authorize, camp.Show)
 		app.Resource("/campuses", CampusesResource{&buffalo.BaseResource{}})
+		app.Resource("/team_positions", TeamPositionsResource{})
 	}
 
 	return app

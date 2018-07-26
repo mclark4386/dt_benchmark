@@ -1,0 +1,6 @@
+- id: "team_position.created.success"
+  translation: "TeamPosition was successfully created."
+- id: "team_position.updated.success"
+  translation: "TeamPosition was successfully updated."
+- id: "team_position.destroyed.success"
+  translation: "TeamPosition was successfully destroyed."

@@ -21,7 +21,7 @@
         <td><%= team.Description %></td>
         <td><%= team.PageSlug %></td>
         <td>
-          <div class="pull-right">
+          <div class="btn-group pull-right" role="group" >
             <a href="<%= teamPath({ team_id: team.ID }) %>" class="btn btn-info">View</a>
             <%= if(isCurrentUserTeamOrSuperAdmin(team.ID)) {%>
               <a href="<%= editTeamPath({ team_id: team.ID }) %>" class="btn btn-warning">Edit</a>
