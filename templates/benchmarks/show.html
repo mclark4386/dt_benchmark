@@ -2,11 +2,11 @@
   <h1>Benchmark#Show</h1>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= benchmarksPath() %>" class="btn btn-info">Back to all Benchmarks</a></li>
-  <li><a href="<%= editBenchmarkPath({ benchmark_id: benchmark.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= benchmarkPath({ benchmark_id: benchmark.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-</ul>
+<div class="btn-group" role="group" >
+  <a href="<%= benchmarksPath() %>" class="btn btn-info">Back to all Benchmarks</a>
+  <a href="<%= editBenchmarkPath({ benchmark_id: benchmark.ID })%>" class="btn btn-warning">Edit</a>
+  <a href="<%= benchmarkPath({ benchmark_id: benchmark.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</div>
 
 <p>
   <strong>Name</strong>: <%= benchmark.Name %>

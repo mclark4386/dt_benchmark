@@ -14,20 +14,31 @@ import (
 )
 
 type Team struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	CreatedAt   time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
-	Name        string    `json:"name" db:"name"`
-	Description string    `json:"description" db:"description"`
-	PageSlug    string    `json:"page_slug" db:"page_slug"`
-	Resources   Resources `many_to_many:"team_resources"`
-	Admins      Users     `many_to_many:"team_admins"`
+	ID          uuid.UUID     `json:"id" db:"id"`
+	CreatedAt   time.Time     `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time     `json:"updated_at" db:"updated_at"`
+	Name        string        `json:"name" db:"name"`
+	Description string        `json:"description" db:"description"`
+	PageSlug    string        `json:"page_slug" db:"page_slug"`
+	Resources   Resources     `many_to_many:"team_resources"`
+	Admins      Users         `many_to_many:"team_admins"`
+	Positions   TeamPositions `has_many:"team_positions" order_by:"name asc"`
 }
 
 // String is not required by pop and may be deleted
 func (t Team) String() string {
 	jt, _ := json.Marshal(t)
 	return string(jt)
+}
+
+// SelectValue will return the value for a select tag.
+func (t Team) SelectValue() interface{} {
+	return t.ID
+}
+
+// SelectLabel will return the label for a select tag.
+func (t Team) SelectLabel() string {
+	return t.Name
 }
 
 // Teams is not required by pop and may be deleted
@@ -126,7 +137,7 @@ func (t *Team) UpdateResources(tx *pop.Connection, resources []string) {
 	}
 }
 
-//Should remove excess and add new admins
+// UpdateAdmins Should remove excess and add new admins
 func (t *Team) UpdateAdmins(tx *pop.Connection, admins []string) {
 	//Remove existing that have been removed from the list
 	args := []interface{}{t.ID}

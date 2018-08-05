@@ -71,7 +71,7 @@ func (v TeamsResource) Show(c buffalo.Context) error {
 	team := &models.Team{}
 
 	// To find the Team the parameter team_id is used.
-	if err := tx.Find(team, c.Param("team_id")); err != nil {
+	if err := tx.Eager().Find(team, c.Param("team_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -175,14 +175,14 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 	c.Set("users", users)
 
 	team_resources := []string{}
-	for _, resource := range team.Resources {
-		team_resources = append(team_resources, resource.ID.String())
+	for i := range team.Resources {
+		team_resources = append(team_resources, team.Resources[i].ID.String())
 	}
 	c.Set("team_resources", team_resources)
 
 	team_admins := []string{}
-	for _, admin := range team.Admins {
-		team_admins = append(team_admins, admin.ID.String())
+	for i := range team.Admins {
+		team_admins = append(team_admins, team.Admins[i].ID.String())
 	}
 	c.Set("team_admins", team_admins)
 

@@ -2,11 +2,11 @@
   <h1>BenchmarkItem#Show</h1>
 </div>
 
-<ul class="list-unstyled list-inline">
-  <li><a href="<%= benchmarkItemsPath() %>" class="btn btn-info">Back to all BenchmarkItems</a></li>
-  <li><a href="<%= editBenchmarkItemPath({ benchmark_item_id: benchmarkItem.ID })%>" class="btn btn-warning">Edit</a></li>
-  <li><a href="<%= benchmarkItemPath({ benchmark_item_id: benchmarkItem.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
-</ul>
+<div class="btn-group" role="group" >
+  <a href="<%= benchmarkItemsPath() %>" class="btn btn-info">Back to all BenchmarkItems</a>
+  <a href="<%= editBenchmarkItemPath({ benchmark_item_id: benchmarkItem.ID })%>" class="btn btn-warning">Edit</a>
+  <a href="<%= benchmarkItemPath({ benchmark_item_id: benchmarkItem.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</div>
 
 <p>
   <strong>Name</strong>: <%= benchmarkItem.Name %>
@@ -14,3 +14,17 @@
 <p>
   <strong>BenchmarkID</strong>: <%= benchmarkItem.BenchmarkID %>
 </p>
+<%= if (len(benchmarkItem.Resources) > 0) {%>
+<div class="card">
+<div class="card-header">
+    <h3>Resources</h3>
+    </div>
+    <div class="card-body">
+    <ul class="list-unstyled">
+        <%= for (resource) in benchmarkItem.Resources { %>
+        <li><a href="<%= resource.Url %>"><%= resource.Title %> </a></li>
+        <% } %>
+        </ul>
+        </div>
+        </div>
+        <% } %>

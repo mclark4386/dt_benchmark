@@ -23,13 +23,13 @@ func SetupNavbar(next buffalo.Handler) buffalo.Handler {
 		c.Set("teams", teams)
 
 		//Load Campuses
-		campuses := &models.Teams{} // &models.Campuses{}
+		campuses := &models.Campuses{}
 
-		/*		err = tx.All(campuses)
-				if err != nil {
-					return errors.WithStack(err)
-				}
-		*/c.Set("campuses", campuses)
+		err = tx.All(campuses)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		c.Set("campuses", campuses)
 
 		return next(c)
 	}
