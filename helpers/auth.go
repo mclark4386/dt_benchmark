@@ -16,8 +16,8 @@ func IsSuperAdmin(user *models.User) bool {
 // the admin for a specific team or not
 func IsTeamAdminOrBetter(user *models.User, team_id uuid.UUID) bool {
 	isTeamAdmin := false
-	for _, team := range user.TeamsIAdmin {
-		if team.ID == team_id {
+	for i := range user.TeamsIAdmin {
+		if user.TeamsIAdmin[i].ID == team_id {
 			isTeamAdmin = true
 			break
 		}
@@ -92,7 +92,7 @@ func IsCampusAdminBetterOrRedirect(c buffalo.Context, campus_id uuid.UUID) error
 	return IsSuperAdminOrRedirect(c)
 }
 
-func IsTeamOrCampusAdminBetterOrRedirect(c buffalo.Context, team_id uuid.UUID, campus_id uuid.UUID) error {
+func IsTeamOrCampusAdminBetterOrRedirect(c buffalo.Context, team_id, campus_id uuid.UUID) error {
 	return IsTeamAdminBetterOrRedirect(c, team_id)
 }
 
