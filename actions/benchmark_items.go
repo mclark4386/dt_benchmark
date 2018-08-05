@@ -157,8 +157,8 @@ func (v BenchmarkItemsResource) Edit(c buffalo.Context) error {
 	c.Set("resources", resources)
 
 	bi_resources := []string{}
-	for _, resource := range benchmarkItem.Resources {
-		bi_resources = append(bi_resources, resource.ID.String())
+	for i := range benchmarkItem.Resources {
+		bi_resources = append(bi_resources, benchmarkItem.Resources[i].ID.String())
 	}
 	c.Set("bi_resources", bi_resources)
 

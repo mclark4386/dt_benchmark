@@ -175,14 +175,14 @@ func (v TeamsResource) Edit(c buffalo.Context) error {
 	c.Set("users", users)
 
 	team_resources := []string{}
-	for _, resource := range team.Resources {
-		team_resources = append(team_resources, resource.ID.String())
+	for i := range team.Resources {
+		team_resources = append(team_resources, team.Resources[i].ID.String())
 	}
 	c.Set("team_resources", team_resources)
 
 	team_admins := []string{}
-	for _, admin := range team.Admins {
-		team_admins = append(team_admins, admin.ID.String())
+	for i := range team.Admins {
+		team_admins = append(team_admins, team.Admins[i].ID.String())
 	}
 	c.Set("team_admins", team_admins)
 
