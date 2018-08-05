@@ -1,10 +1,13 @@
 package actions
 
 import (
+	"fmt"
+
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/uuid"
 	"github.com/pkg/errors"
 )
 
@@ -125,7 +128,7 @@ func (v CampusesResource) Create(c buffalo.Context) error {
 // Edit renders a edit form for a Campus. This function is
 // mapped to the path GET /campuses/{campus_id}/edit
 func (v CampusesResource) Edit(c buffalo.Context) error {
-	if helpers.IsSuperAdminOrRedirect(c) != nil {
+	if helpers.IsCampusAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("campus_id")))) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
@@ -140,6 +143,14 @@ func (v CampusesResource) Edit(c buffalo.Context) error {
 	if err := tx.Find(campus, c.Param("campus_id")); err != nil {
 		return c.Error(404, err)
 	}
+
+	users := models.Users{}
+
+	if err := tx.All(&users); err != nil {
+		fmt.Printf("ERROR pulling users: %v\n", err)
+	}
+
+	c.Set("users", users)
 
 	campus_admins := []string{}
 	for _, admin := range campus.Admins {
@@ -153,7 +164,7 @@ func (v CampusesResource) Edit(c buffalo.Context) error {
 // Update changes a Campus in the DB. This function is mapped to
 // the path PUT /campuses/{campus_id}
 func (v CampusesResource) Update(c buffalo.Context) error {
-	if helpers.IsSuperAdminOrRedirect(c) != nil {
+	if helpers.IsCampusAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("campus_id")))) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
@@ -161,6 +172,17 @@ func (v CampusesResource) Update(c buffalo.Context) error {
 	if !ok {
 		return errors.WithStack(errors.New("no transaction found"))
 	}
+	type UpdateElements struct {
+		Admins []string `json:"admins"`
+	}
+
+	elements := UpdateElements{}
+
+	if err := c.Bind(&elements); err != nil {
+		return errors.WithStack(err)
+	}
+
+	fmt.Printf("================\nupdate elements: %v\n", elements)
 
 	// Allocate an empty Campus
 	campus := &models.Campus{}
@@ -173,6 +195,8 @@ func (v CampusesResource) Update(c buffalo.Context) error {
 	if err := c.Bind(campus); err != nil {
 		return errors.WithStack(err)
 	}
+
+	campus.UpdateAdmins(tx, elements.Admins)
 
 	verrs, err := tx.ValidateAndUpdate(campus)
 	if err != nil {
@@ -198,7 +222,7 @@ func (v CampusesResource) Update(c buffalo.Context) error {
 // Destroy deletes a Campus from the DB. This function is mapped
 // to the path DELETE /campuses/{campus_id}
 func (v CampusesResource) Destroy(c buffalo.Context) error {
-	if helpers.IsSuperAdminOrRedirect(c) != nil {
+	if helpers.IsCampusAdminBetterOrRedirect(c, uuid.Must(uuid.FromString(c.Param("campus_id")))) != nil {
 		return nil
 	}
 	// Get the DB connection from the context
