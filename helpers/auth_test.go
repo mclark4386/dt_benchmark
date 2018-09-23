@@ -1,11 +1,11 @@
 package helpers_test
 
 import (
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
+	"github.com/mclark4386/dt_benchmark/models"
 
 	"testing"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
+	"github.com/mclark4386/dt_benchmark/helpers"
 )
 
 func Test_IsSuperAdmin_Admin(t *testing.T) {

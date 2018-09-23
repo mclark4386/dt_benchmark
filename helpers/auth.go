@@ -1,10 +1,10 @@
 package helpers
 
 import (
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/plush"
 	"github.com/gobuffalo/uuid"
+	"github.com/mclark4386/dt_benchmark/models"
 )
 
 // IsSuperAdmin will return if the user is a super admin or not

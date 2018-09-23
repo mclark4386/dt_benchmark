@@ -5,11 +5,11 @@ import (
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/envy"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo/middleware/csrf"
 	"github.com/gobuffalo/buffalo/middleware/i18n"
 	"github.com/gobuffalo/packr"
 	"github.com/mclark4386/buffalo_helpers"
+	"github.com/mclark4386/dt_benchmark/models"
 )
 
 // ENV is used to help switch settings based on where the

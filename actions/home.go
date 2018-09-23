@@ -1,9 +1,9 @@
 package actions
 
 import (
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
+	"github.com/mclark4386/dt_benchmark/models"
 )
 
 // HomeHandler is a default handler to serve up

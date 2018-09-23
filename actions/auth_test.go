@@ -1,6 +1,6 @@
 package actions
 
-import "cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
+import "github.com/mclark4386/dt_benchmark/models"
 
 func (as *ActionSuite) Test_Auth_New() {
 	res := as.HTML("/login").Get()

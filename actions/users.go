@@ -3,9 +3,9 @@ package actions
 import (
 	"fmt"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
+	"github.com/mclark4386/dt_benchmark/models"
 	"github.com/pkg/errors"
 )
 

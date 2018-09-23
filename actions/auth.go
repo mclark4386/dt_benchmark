@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	"strings"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
+	"github.com/mclark4386/dt_benchmark/models"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )

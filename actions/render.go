@@ -1,9 +1,9 @@
 package actions
 
 import (
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr"
+	"github.com/mclark4386/dt_benchmark/helpers"
 )
 
 var r *render.Engine

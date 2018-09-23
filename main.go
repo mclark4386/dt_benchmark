@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/actions"
+	"github.com/mclark4386/dt_benchmark/actions"
 )
 
 func main() {

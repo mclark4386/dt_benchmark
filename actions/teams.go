@@ -3,8 +3,8 @@ package actions
 import (
 	"fmt"
 
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/helpers"
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
+	"github.com/mclark4386/dt_benchmark/models"
+	"github.com/mclark4386/dt_benchmark/helpers"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"

@@ -1,8 +1,8 @@
 package grifts
 
 import (
-	"cpsg-git.mattclark.guru/highlands/dt_benchmark/actions"
 	"github.com/gobuffalo/buffalo"
+	"github.com/mclark4386/dt_benchmark/actions"
 )
 
 func init() {

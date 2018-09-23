@@ -1,6 +1,6 @@
 package models_test
 
-import "cpsg-git.mattclark.guru/highlands/dt_benchmark/models"
+import "github.com/mclark4386/dt_benchmark/models"
 
 func (ms *ModelSuite) Test_User_Create() {
 	count, err := ms.DB.Count("users")
