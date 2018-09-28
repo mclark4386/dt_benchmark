@@ -71,7 +71,7 @@ func App() *buffalo.App {
 		app.Resource("/benchmarks", BenchmarksResource{})
 		app.Resource("/benchmark_items", BenchmarkItemsResource{})
 		camp := &CampusesResource{}
-		app.Middleware.Skip(Authorize, camp.Show, camp.Index)
+		app.Middleware.Skip(Authorize, camp.Show, camp.List)
 		app.Resource("/campuses", CampusesResource{&buffalo.BaseResource{}})
 		app.Resource("/team_positions", TeamPositionsResource{})
 	}
