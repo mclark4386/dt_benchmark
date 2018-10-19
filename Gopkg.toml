@@ -33,10 +33,6 @@
   branch = "master"
   name = "github.com/mclark4386/buffalo_helpers"
 
-[[override]]
-  branch = "add_campuses"
-  name = "github.com/gobuffalo/flect"
-
 [[constraint]]
   name = "github.com/pkg/errors"
   version = "0.8.0"
