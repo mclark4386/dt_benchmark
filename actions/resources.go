@@ -1,11 +1,11 @@
 package actions
 
 import (
-	"github.com/mclark4386/dt_benchmark/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
 	"github.com/mclark4386/dt_benchmark/helpers"
+	"github.com/mclark4386/dt_benchmark/models"
 	"github.com/pkg/errors"
 )
 
