@@ -11,7 +11,7 @@ ADD yarn.lock .
 RUN yarn install --no-progress
 ADD . .
 RUN GO111MODULE=on go mod vendor
-RUN buffalo build --static -o /bin/app
+RUN GO111MODULE=on buffalo build --static -o /bin/app
 
 FROM alpine
 RUN apk add --no-cache bash
