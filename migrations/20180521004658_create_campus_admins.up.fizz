@@ -1,5 +1,6 @@
-create_table("campus_admins", func(t) {
+create_table("campus_admins") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("user_id", "uuid", {})
 	t.Column("campus_id", "uuid", {})
-})
+	t.Timestamps()
+}

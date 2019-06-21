@@ -1,5 +1,6 @@
-create_table("resources", func(t) {
+create_table("resources") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("title", "string", {})
 	t.Column("url", "string", {})
-})
+	t.Timestamps()
+}

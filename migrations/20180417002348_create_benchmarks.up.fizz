@@ -1,5 +1,6 @@
-create_table("benchmarks", func(t) {
+create_table("benchmarks") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("name", "string", {})
 	t.Column("description", "string", {})
-})
+	t.Timestamps()
+}

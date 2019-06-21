@@ -1,6 +1,7 @@
-create_table("pages", func(t) {
+create_table("pages") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("title", "string", {})
 	t.Column("content", "text", {})
 	t.Column("slug", "string", {})
-})
+	t.Timestamps()
+}
