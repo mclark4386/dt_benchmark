@@ -28,10 +28,7 @@ jobs:
 
     - name: Get dependencies and Test
       env:
-        PG_USER: postgres
-        PG_DATABASE: postgres
-        PG_PASSWORD: postgres
-        PG_PORT: ${{ job.services.postgres.ports['5432'] }}
+        TEST_DATABASE_URL: postgres://postgres:postgres@${{ job.services.postgres.ports['5432'] }}/postgres?sslmode=disable
       run: |
         export GOPATH=`pwd`/go_path
         go mod tidy
