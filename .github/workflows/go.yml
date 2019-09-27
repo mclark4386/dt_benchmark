@@ -42,5 +42,5 @@ jobs:
         $GOPATH/bin/buffalo version
         $GOPATH/bin/buffalo plugins install github.com/gobuffalo/buffalo-pop
         ls $GOPATH/bin/*
-        $GOPATH/bin/buffalo-pop create -a
+        $GOPATH/bin/buffalo-pop pop create -a
         $GOPATH/bin/buffalo test
