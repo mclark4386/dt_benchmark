@@ -16,11 +16,9 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
 
-    - name: Get dependencies
+    - name: Get dependencies and Test
       run: |
         export GOPATH=`pwd`/go_path
         go mod tidy
         go get github.com/gobuffalo/buffalo/buffalo
-
-    - name: Test
-      run: $GOPATH/bin/buffalo test
+        $GOPATH/bin/buffalo test
