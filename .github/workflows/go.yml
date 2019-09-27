@@ -37,10 +37,10 @@ jobs:
       run: |
         sudo apt-get install postgresql-client
         export GOPATH=`pwd`/go_path
+        export BUFFALO_PLUGIN_PATH=$GOPATH/bin
         go mod tidy
         go get -v github.com/gobuffalo/buffalo/buffalo
         $GOPATH/bin/buffalo version
         $GOPATH/bin/buffalo plugins install github.com/gobuffalo/buffalo-pop
-        ls $GOPATH/bin/*
-        $GOPATH/bin/buffalo-pop pop create -a
+        $GOPATH/bin/buffalo pop create -a
         $GOPATH/bin/buffalo test
