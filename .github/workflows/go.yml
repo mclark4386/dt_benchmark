@@ -33,7 +33,7 @@ jobs:
 
     - name: Get dependencies and Test
       env:
-        TEST_DATABASE_URL: postgres://postgres:postgres@postgres:${{ job.services.postgres.ports['5432'] }}/dt_benchmark_test?sslmode=disable
+        TEST_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports['5432'] }}/dt_benchmark_test?sslmode=disable
       run: |
         export GOPATH=`pwd`/go_path
         go mod tidy
