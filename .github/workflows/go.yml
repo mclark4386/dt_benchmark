@@ -39,4 +39,6 @@ jobs:
         export GOPATH=`pwd`/go_path
         go mod tidy
         go get github.com/gobuffalo/buffalo/buffalo
+        $GOPATH/bin/buffalo plugins install
+        $GOPATH/bin/buffalo pop create -a
         $GOPATH/bin/buffalo test
