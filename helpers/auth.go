@@ -3,7 +3,7 @@ package helpers
 import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/plush"
-	"github.com/gobuffalo/uuid"
+	"github.com/gofrs/uuid"
 	"github.com/mclark4386/dt_benchmark/models"
 )
 

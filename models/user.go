@@ -5,28 +5,30 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/uuid"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
+	"github.com/gofrs/uuid"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID                   uuid.UUID `json:"id" db:"id"`
-	CreatedAt            time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt            time.Time `json:"updated_at" db:"updated_at"`
-	Email                string    `json:"email" db:"email"`
-	FirstName            string    `json:"first_name" db:"first_name"`
-	LastName             string    `json:"last_name" db:"last_name"`
-	Name                 string    `json:"name" db:"name" select:"(users.first_name||' '||users.last_name) as name" rw:"r"`
-	PasswordHash         string    `json:"-" db:"password_hash"`
-	Password             string    `json:"-" db:"-"`
-	PasswordConfirmation string    `json:"-" db:"-"`
-	IsSuperAdmin         bool      `json:"super_admin" db:"super_admin"`
-	TeamsIAdmin          Teams     `many_to_many:"team_admins"`
-	CampusesIAdmin       Campuses  `many_to_many:"campus_admins"`
+	ID                   uuid.UUID  `json:"id" db:"id"`
+	CreatedAt            time.Time  `json:"created_at" db:"created_at"`
+	UpdatedAt            time.Time  `json:"updated_at" db:"updated_at"`
+	Email                string     `json:"email" db:"email"`
+	FirstName            string     `json:"first_name" db:"first_name"`
+	LastName             string     `json:"last_name" db:"last_name"`
+	Name                 string     `json:"name" db:"name" select:"(users.first_name||' '||users.last_name) as name" rw:"r"`
+	PasswordHash         string     `json:"-" db:"password_hash"`
+	Password             string     `json:"-" db:"-"`
+	PasswordConfirmation string     `json:"-" db:"-"`
+	IsSuperAdmin         bool       `json:"super_admin" db:"super_admin"`
+	TeamsIAdmin          Teams      `many_to_many:"team_admins"`
+	CampusesIAdmin       Campuses   `many_to_many:"campus_admins"`
+	RefreshToken         nulls.UUID `json:"-" db:"refresh_token"`
 }
 
 // String is not required by pop and may be deleted
