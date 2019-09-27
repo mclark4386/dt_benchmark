@@ -18,6 +18,7 @@ jobs:
 
     - name: Get dependencies
       run: |
+        export GOPATH=`pwd`
         go mod tidy
         go get github.com/gobuffalo/buffalo/buffalo
 
