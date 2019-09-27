@@ -97,18 +97,18 @@ func App() *buffalo.App {
 		api.DELETE("/logout", AuthDestroy)
 
 		usr := &UsersResource{}
-		api.Middleware.Skip(middleware.TokenMiddleware, usr.Create, usr.New)
-		api.Resource("/users", UsersResource{&buffalo.BaseResource{}})
+		api.Middleware.Skip(middleware.TokenMiddleware, usr.Create)
+		api.Resource("/users", usr)
 		page := &PagesResource{}
 		api.Middleware.Skip(middleware.TokenMiddleware, page.Show)
-		api.Resource("/pages", PagesResource{&buffalo.BaseResource{}})
+		api.Resource("/pages", page)
 		api.Resource("/teams", TeamsResource{})
 		api.Resource("/resources", ResourcesResource{})
 		api.Resource("/benchmarks", BenchmarksResource{})
 		api.Resource("/benchmark_items", BenchmarkItemsResource{})
 		camp := &CampusesResource{}
 		api.Middleware.Skip(middleware.TokenMiddleware, camp.Show, camp.List)
-		api.Resource("/campuses", CampusesResource{&buffalo.BaseResource{}})
+		api.Resource("/campuses", camp)
 		api.Resource("/team_positions", TeamPositionsResource{})
 		//end api
 

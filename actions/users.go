@@ -2,6 +2,7 @@ package actions
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
@@ -27,9 +28,9 @@ type UsersResource struct {
 	buffalo.Resource
 }
 type UserError struct {
-	user  *models.User
-	err   string
-	verrs *validate.Errors
+	User  *models.User     `json:"user"`
+	Err   string           `json:"error"`
+	Verrs *validate.Errors `json:"validation_errors"`
 }
 
 // List gets all Users. This function is mapped to the path
@@ -129,9 +130,8 @@ func (v UsersResource) Create(c buffalo.Context) error {
 		// correct the input.
 		return c.Render(422, r.JSON(
 			UserError{
-				user:  user,
-				err:   err.Error(),
-				verrs: verrs,
+				User:  user,
+				Verrs: verrs,
 			}))
 	}
 
@@ -200,8 +200,8 @@ func (v UsersResource) Update(c buffalo.Context) error {
 		// Render again the edit.html template that the user can
 		// correct the input.
 		return c.Render(422, r.JSON(UserError{
-			user:  user,
-			verrs: verrs,
+			User:  user,
+			Verrs: verrs,
 		}))
 	}
 
@@ -209,7 +209,7 @@ func (v UsersResource) Update(c buffalo.Context) error {
 	c.Flash().Add("success", "User was updated successfully")
 
 	// and redirect to the users index page
-	return c.Render(302, r.JSON(user))
+	return c.Render(http.StatusCreated, r.JSON(user))
 }
 
 // Destroy deletes a User from the DB. This function is mapped

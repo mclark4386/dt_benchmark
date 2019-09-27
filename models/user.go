@@ -14,6 +14,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+const minPasswordLength int = 8
+
 type User struct {
 	ID                   uuid.UUID  `json:"id" db:"id"`
 	CreatedAt            time.Time  `json:"created_at" db:"created_at"`
@@ -23,8 +25,8 @@ type User struct {
 	LastName             string     `json:"last_name" db:"last_name"`
 	Name                 string     `json:"name" db:"name" select:"(users.first_name||' '||users.last_name) as name" rw:"r"`
 	PasswordHash         string     `json:"-" db:"password_hash"`
-	Password             string     `json:"-" db:"-"`
-	PasswordConfirmation string     `json:"-" db:"-"`
+	Password             string     `json:"password" db:"-"`
+	PasswordConfirmation string     `json:"password_confirm" db:"-"`
 	IsSuperAdmin         bool       `json:"super_admin" db:"super_admin"`
 	TeamsIAdmin          Teams      `many_to_many:"team_admins"`
 	CampusesIAdmin       Campuses   `many_to_many:"campus_admins"`
@@ -37,34 +39,6 @@ func (u User) String() string {
 	return string(ju)
 }
 
-func (u *User) PrepFields() (*validate.Errors, error) {
-	if len(strings.TrimSpace(u.Email)) > 0 {
-		u.Email = strings.ToLower(u.Email)
-	}
-	if len(strings.TrimSpace(u.Password)) > 0 {
-		ph, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
-		if err != nil {
-			return validate.NewErrors(), errors.WithStack(err)
-		}
-		u.PasswordHash = string(ph)
-	}
-	return validate.NewErrors(), nil
-}
-
-func (u *User) Update(tx *pop.Connection) (*validate.Errors, error) {
-	if verrs, err := u.PrepFields(); (verrs != nil && verrs.HasAny()) || err != nil {
-		return verrs, err
-	}
-	return tx.ValidateAndSave(u)
-}
-
-func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
-	if verrs, err := u.PrepFields(); (verrs != nil && verrs.HasAny()) || err != nil {
-		return verrs, err
-	}
-	return tx.ValidateAndCreate(u)
-}
-
 // Users is not required by pop and may be deleted
 type Users []User
 
@@ -74,13 +48,36 @@ func (u Users) String() string {
 	return string(ju)
 }
 
+// Create wraps up the pattern of encrypting the password and
+// running validations. Useful when writing tests.
+func (u *User) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(u)
+}
+
+// Update handles the extra work possibly needed during user update,
+// hashing password and making email lowercase for consistency
+func (u *User) Update(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.Eager().ValidateAndUpdate(u)
+}
+
+func (u *User) sanitizeFields() *User {
+	// force email to lowercase for better matching
+	u.Email = strings.ToLower(u.Email)
+
+	// wipe out password field after it's been hashed
+	u.Password = ""
+	u.PasswordConfirmation = ""
+	return u
+}
+
 // Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
+// This method is not required and may be deleted.
 func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	var err error
 	return validate.Validate(
 		&validators.StringIsPresent{Field: u.Email, Name: "Email"},
-		&validators.StringIsPresent{Field: u.PasswordHash, Name: "PasswordHash"},
-		//check email is unique
+
+		// check to see if the email address is already taken:
 		&validators.FuncValidator{
 			Field:   u.Email,
 			Name:    "Email",
@@ -105,14 +102,60 @@ func (u *User) Validate(tx *pop.Connection) (*validate.Errors, error) {
 // This method is not required and may be deleted.
 func (u *User) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 	var err error
-	return validate.Validate(
-		&validators.StringIsPresent{Field: u.Password, Name: "Password"},
-		&validators.StringsMatch{Name: "Password", Field: u.Password, Field2: u.PasswordConfirmation, Message: "Password does not match confirmation"},
-	), err
+	return validate.NewErrors(), err
 }
 
 // ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
 // This method is not required and may be deleted.
 func (u *User) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
+}
+
+func (u *User) validatePassword() *validate.Errors {
+	passwordLengthValidator := validators.StringLengthInRange{
+		Field:   u.Password,
+		Name:    "Password",
+		Message: "Password is not long enough. Minimum of 8 characters required.",
+		Min:     minPasswordLength,
+		Max:     0,
+	}
+	passwordConfirmValidator := validators.StringsMatch{
+		Field:   u.Password,
+		Name:    "PasswordConfirm",
+		Message: "Password does not match confirmation",
+		Field2:  u.PasswordConfirmation,
+	}
+	verrs := validate.NewErrors()
+	passwordLengthValidator.IsValid(verrs)
+	passwordConfirmValidator.IsValid(verrs)
+	// spew.Printf("validations at this point: %+v\n", verrs)
+	return verrs
+}
+
+func encryptPassword(password string) (string, error) {
+	ph, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(ph), err
+}
+
+func (u *User) BeforeSave(tx *pop.Connection) error {
+	if len(u.Password) != 0 {
+		verrs := u.validatePassword()
+		if verrs.HasAny() {
+			return errors.New(verrs.Error())
+		}
+		ph, err := encryptPassword(u.Password)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		u.PasswordHash = ph
+	}
+
+	u = u.sanitizeFields()
+	return nil
+}
+
+// AfterCreate builds a ReferralCode for a user after it is created.
+func (u *User) AfterCreate(tx *pop.Connection) error {
+	tx.Reload(u)
+	return nil
 }
