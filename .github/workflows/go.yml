@@ -35,6 +35,7 @@ jobs:
       env:
         TEST_DATABASE_URL: postgres://postgres:postgres@localhost:${{ job.services.postgres.ports['5432'] }}/dt_benchmark_test?sslmode=disable
       run: |
+        sudo apt-get install postgresql-client
         export GOPATH=`pwd`/go_path
         go mod tidy
         go get github.com/gobuffalo/buffalo/buffalo
