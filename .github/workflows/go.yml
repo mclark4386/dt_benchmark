@@ -22,4 +22,4 @@ jobs:
         go get github.com/gobuffalo/buffalo/buffalo
 
     - name: Test
-      run: buffalo test
+      run: $GOPATH/bin/buffalo test
