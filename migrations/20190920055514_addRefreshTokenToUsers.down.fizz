@@ -1,0 +1,2 @@
+drop_column("users","refresh_token")
+drop_column("users","password_reset_token")

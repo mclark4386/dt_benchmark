@@ -1,17 +1,21 @@
 package actions
 
 import (
+	"net/http"
+	"strings"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo-pop/pop/popmw"
+	contenttype "github.com/gobuffalo/mw-contenttype"
+	"github.com/gobuffalo/x/sessions"
+	"github.com/rs/cors"
 
 	// popmw "github.com/gobuffalo/buffalo-pop/pop/popmw"
 	"github.com/gobuffalo/envy"
-	csrf "github.com/gobuffalo/mw-csrf"
 	i18n "github.com/gobuffalo/mw-i18n"
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
-	"github.com/gobuffalo/packr/v2"
 
-	"github.com/mclark4386/buffalo_helpers"
+	"github.com/mclark4386/dt_benchmark/middleware"
 	"github.com/mclark4386/dt_benchmark/models"
 )
 
@@ -24,59 +28,95 @@ var T *i18n.Translator
 // App is where all routes and middleware for buffalo
 // should be defined. This is the nerve center of your
 // application.
+//
+// Routing, middleware, groups, etc... are declared TOP -> DOWN.
+// This means if you add a middleware to `app` *after* declaring a
+// group, that group will NOT have that new middleware. The same
+// is true of resource declarations as well.
+//
+// It also means that routes are checked in the order they are declared.
+// `ServeFiles` is a CATCH-ALL route, so it should always be
+// placed last in the route declarations, as it will prevent routes
+// declared after it to never be called.
 func App() *buffalo.App {
 	if app == nil {
-		app = buffalo.New(buffalo.Options{
-			Env:         ENV,
-			SessionName: "_dt_benchmark_session",
-			PreWares:    []buffalo.PreWare{buffalo_helpers.AutoSetContentType},
+		c := cors.New(cors.Options{
+			AllowedOrigins:   []string{"*"},
+			AllowedMethods:   []string{"HEAD", "GET", "POST", "PUT", "PATCH", "DELETE"},
+			AllowedHeaders:   []string{"*"},
+			AllowCredentials: false,
+			ExposedHeaders:   []string{"Access-Token"},
 		})
+
+		app = buffalo.New(buffalo.Options{
+			Env:          ENV,
+			SessionName:  "_dt_benchmark_session",
+			SessionStore: sessions.Null{},
+			PreWares: []buffalo.PreWare{
+				func(h http.Handler) http.Handler {
+					return http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+						path := strings.ToLower(req.URL.Path)
+						_, hasCT := req.Header["Content-Type"]
+						if strings.HasSuffix(path, ".json") {
+							req.URL.Path = path[:len(path)-5]
+							if !hasCT {
+								req.Header["Content-Type"] = []string{"json"}
+							}
+						} else if strings.HasSuffix(path, ".xml") {
+							req.URL.Path = path[:len(path)-4]
+							if !hasCT {
+								req.Header["Content-Type"] = []string{"xml"}
+							}
+						}
+					})
+				},
+				c.Handler,
+			},
+		})
+		// app.Muxer().StrictSlash(false)
 
 		if ENV == "development" {
 			app.Use(paramlogger.ParameterLogger)
 		}
 
-		// Protect against CSRF attacks. https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
-		// Remove to disable this.
-		app.Use(csrf.New)
+		// Set the request content type to JSON
+		app.Use(contenttype.Set("application/json"))
 
 		// Wraps each request in a transaction.
 		//  c.Value("tx").(*pop.PopTransaction)
 		// Remove to disable this.
 		app.Use(popmw.Transaction(models.DB))
-		app.Use(SetCurrentUser)
 
-		// Setup and use translations:
-		var err error
-		if T, err = i18n.New(packr.New("../locales", "../locales"), "en-US"); err != nil {
-			app.Stop(err)
-		}
-		app.Use(T.Middleware())
-		app.Use(SetupNavbar)
-		app.Use(Authorize)
+		api := app.Group("/api/v1")
 
-		app.Middleware.Skip(Authorize, HomeHandler, AuthCreate, AuthNew, AuthDestroy)
-		app.GET("/", HomeHandler)
+		api.Use(middleware.TokenMiddleware)
 
-		app.ServeFiles("/assets", assetsBox)
-		app.GET("/login", AuthNew)
-		app.POST("/login", AuthCreate)
-		app.DELETE("/logout", AuthDestroy)
+		api.Middleware.Skip(middleware.TokenMiddleware, AuthCreate, AuthDestroy)
+
+		api.POST("/login", AuthCreate)
+		api.DELETE("/logout", AuthDestroy)
 
 		usr := &UsersResource{}
-		app.Middleware.Skip(Authorize, usr.Create, usr.New)
-		app.Resource("/users", UsersResource{&buffalo.BaseResource{}})
+		api.Middleware.Skip(middleware.TokenMiddleware, usr.Create)
+		api.Resource("/users", usr)
 		page := &PagesResource{}
-		app.Middleware.Skip(Authorize, page.Show)
-		app.Resource("/pages", PagesResource{&buffalo.BaseResource{}})
-		app.Resource("/teams", TeamsResource{})
-		app.Resource("/resources", ResourcesResource{})
-		app.Resource("/benchmarks", BenchmarksResource{})
-		app.Resource("/benchmark_items", BenchmarkItemsResource{})
+		api.Middleware.Skip(middleware.TokenMiddleware, page.Show)
+		api.Resource("/pages", page)
+		api.Resource("/teams", TeamsResource{})
+		api.Resource("/resources", ResourcesResource{})
+		api.Resource("/benchmarks", BenchmarksResource{})
+		api.Resource("/benchmark_items", BenchmarkItemsResource{})
 		camp := &CampusesResource{}
-		app.Middleware.Skip(Authorize, camp.Show, camp.List)
-		app.Resource("/campuses", CampusesResource{&buffalo.BaseResource{}})
-		app.Resource("/team_positions", TeamPositionsResource{})
+		api.Middleware.Skip(middleware.TokenMiddleware, camp.Show, camp.List)
+		api.Resource("/campuses", camp)
+		api.Resource("/team_positions", TeamPositionsResource{})
+		//end api
+
+		// app.ServeFiles("/", assetsBox)
+		// Custom static file server (replaces app.ServeFiles)
+		configureAssetsBoxSeparator()
+		app.GET("/{asset:.*}", StaticFileGet)
+		app.HEAD("/{asset:.*}", StaticFileGet)
 	}
 
 	return app

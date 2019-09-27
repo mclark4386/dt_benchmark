@@ -22,11 +22,6 @@ func (as *ActionSuite) Test_UsersResource_Destroy() {
 	//	as.Fail("Not Implemented!")
 }
 
-func (as *ActionSuite) Test_Users_New() {
-	res := as.HTML("/users/new").Get()
-	as.Equal(200, res.Code)
-}
-
 func (as *ActionSuite) Test_Users_Create() {
 	count, err := as.DB.Count("users")
 	as.NoError(err)
@@ -38,7 +33,7 @@ func (as *ActionSuite) Test_Users_Create() {
 		PasswordConfirmation: "password",
 	}
 
-	res := as.HTML("/users").Post(u)
+	res := as.JSON("/api/v1/users").Post(u)
 	as.Equal(302, res.Code)
 
 	count, err = as.DB.Count("users")
