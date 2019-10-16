@@ -41,6 +41,6 @@ jobs:
         go mod tidy
         go get -v github.com/gobuffalo/buffalo/buffalo
         $GOPATH/bin/buffalo version
-        $GOPATH/bin/buffalo plugins install github.com/gobuffalo/buffalo-pop
-        $GOPATH/bin/buffalo pop create -a
+        $GOPATH/bin/buffalo plugins install -v github.com/gobuffalo/buffalo-pop
+        $GOPATH/bin/buffalo pop create -a -d
         $GOPATH/bin/buffalo test
