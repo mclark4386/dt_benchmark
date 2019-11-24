@@ -1,5 +1,4 @@
-name: Go
-name: Tests
+name: Go Tests
 on: [push]
 jobs:
 
