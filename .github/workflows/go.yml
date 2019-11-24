@@ -1,0 +1,46 @@
+name: Go Tests
+on: [push]
+jobs:
+
+  linux-test:
+    name: Linux
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+        # will assign a random free host port
+        - 5432/tcp
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+
+    - name: Set up Go 1.13
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Test
+      env:
+        # use localhost for the host here because we are running the job on the VM.
+        # If we were running the job on in a container this would be postgres
+        TEST_DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:${{ job.services.postgres.ports[5432] }}/dt_benchmark_test?sslmode=disable"
+      run: |
+        sudo apt-get install postgresql-client
+        export GOPATH=`pwd`/go_path
+        export BUFFALO_PLUGIN_PATH=$GOPATH/bin
+        go mod tidy
+        go get -v github.com/gobuffalo/buffalo/buffalo
+        $GOPATH/bin/buffalo version
+        $GOPATH/bin/buffalo plugins install -v github.com/gobuffalo/buffalo-pop
+        $GOPATH/bin/buffalo-pop create -a -d
+        $GOPATH/bin/buffalo test
+
